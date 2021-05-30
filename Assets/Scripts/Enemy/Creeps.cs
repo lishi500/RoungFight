@@ -8,7 +8,7 @@ public class Creeps : EnemyBase
         // no action, or send event enemy die
     }
 
-    public void Action() {
+    public override void BaseAction() {
         Creature target = BoardManager.Instance.playerParty.player;
         DamageDef damageDef = DamageHelper.Instance.CalculateDamage(GetAttrVal(AttrType.Attack), this, target, DamageType.NORMAL);
         target.ReduceHealth(damageDef);

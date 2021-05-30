@@ -7,6 +7,11 @@ public abstract class Creature : MonoBehaviour
 {
     public List<Attribute> attributes;
     public bool isAlive = true;
+    public Skill primarySkill;
+    public Skill secondarySkill;
+    public Creature target;
+
+    public abstract void BaseAction();
 
     public Attribute health {
         get { return GetAttr(AttrType.Health); }

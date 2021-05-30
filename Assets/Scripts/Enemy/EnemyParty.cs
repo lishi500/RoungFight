@@ -20,14 +20,14 @@ public class EnemyParty : Party
 
     protected void BossAction() {
         boss.notifyEnemyEnd += OnBossActionEnd;
-        boss.Action();
+        boss.BaseAction();
     }
 
     protected void CreepsAction() {
         NextCreeps();
         if (m_current_creeps != null) {
             m_current_creeps.notifyEnemyEnd += OnCreepActionEnd;
-            m_current_creeps.Action();
+            m_current_creeps.BaseAction();
         } else {
             ResetAllActionFlag();
             OnRoundEnd();

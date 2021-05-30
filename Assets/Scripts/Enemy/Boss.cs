@@ -8,13 +8,13 @@ public class Boss : EnemyBase
         // level complete
     }
 
-    public void Action() {
+    public override void BaseAction() {
         Creature target = BoardManager.Instance.playerParty.player;
         DamageDef damageDef = DamageHelper.Instance.CalculateDamage(GetAttrVal(AttrType.Attack), this, target, DamageType.NORMAL);
         target.ReduceHealth(damageDef);
         ActionFinished();
     }
-
+   
     void Start()
     {
         
@@ -25,4 +25,6 @@ public class Boss : EnemyBase
     {
         
     }
+
+  
 }
