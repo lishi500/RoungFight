@@ -25,9 +25,8 @@ public class Cat : Creature
     }
 
     public void NormalAttack() {
-        Boss boss = BoardManager.Instance.enemyParty.boss;
-        DamageDef damageDef = DamageHelper.Instance.CalculateDamage(GetAttrVal(AttrType.Attack), this, boss, DamageType.NORMAL);
-        boss.ReduceHealth(damageDef);
+        Action baseAttack = new BaseAttackAction(transform.gameObject, BoardManager.Instance.enemyParty.boss.gameObject);
+        baseAttack.StartAction();
     }
 
     public override void OnDie() {

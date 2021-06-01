@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseAttackAction : Action
-{
-    public BaseAttackAction(GameObject self, GameObject target) : base(self, target) {}
-    public BaseAttackAction(GameObject self, List<GameObject> targets) : base(self, targets) {}
-
+public class BaseAttackAction : Action {
     public override void StartAction() {
-        Creature creature = self.GetComponent<Creature>();
-        foreach (Creature to in toS) {
+        Creature from = self.GetComponent<Creature>();
+        foreach (GameObject obj in targets) { 
+            Creature to = obj.GetComponent<Creature>();
             BaseAttack(from, to);
         }
-        
     }
 
     public void BaseAttack(Creature from, Creature to) {

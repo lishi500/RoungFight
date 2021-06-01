@@ -32,7 +32,8 @@ public class PlayerParty : Party
         BoardManager.Instance.EnablePlayerAction();
     }
 
-    public void Awake() {
+    protected override void Awake() {
+        base.Awake();
         player = GetComponentInChildren<Player>();
         cats = GetComponentsInChildren<Cat>().ToList();
         foreach (Cat cat in cats) {

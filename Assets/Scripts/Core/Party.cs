@@ -9,9 +9,20 @@ public abstract class Party : MonoBehaviour
     public event PartRoundStartEvent notifyPartyRoundStart;
     public delegate void PartRoundEndEvent(Party party);
     public event PartRoundEndEvent notifyPartyRoundEnd;
+    public ActionChain actionChain;
 
     //public abstract void CanStartRound();
     public abstract void StartRound();
+
+    public void AddAction(Action action) {
+        actionChain.AddAction(action);
+    }
+
+    public void StartActionChain() {
+        if (!actionChain.isStarted && !actionChain.isExecuting) {
+            actionChain.StartActionChain();
+        }
+    }
 
     protected void OnRoundStart() {
         if (notifyPartyRoundStart != null) {
@@ -24,6 +35,10 @@ public abstract class Party : MonoBehaviour
             notifyPartyRoundEnd(this);
         }
         RoundManager.Instance.MoveToNextRountParty();
+    }
+
+    protected virtual void Awake() {
+        actionChain = GetComponent<ActionChain>();
     }
 
 }

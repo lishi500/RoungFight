@@ -1,13 +1,20 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Action : MonoBehaviour
+public abstract class Action
 {
     protected GameObject self;
     protected List<GameObject> targets;
-    //public CatCafe catCafe;
-    public GameObject actionHolder;
+    protected Creature from {
+        get { return self.GetComponent<Creature>(); }
+    }
+
+    protected List<Creature> toS {
+        get { return targets.Select(tar => tar.GetComponent<Creature>()).ToList(); }
+    }
+
     public ActionType type;
 
     public delegate void ActionEndEvent(Action action);
@@ -15,18 +22,15 @@ public abstract class Action : MonoBehaviour
 
     public abstract void StartAction();
     //public abstract void Interrupt();
-
-    protected virtual void Awake() {
-        //catCafe = GameManager.Instance.catCafe;
-        actionHolder = GameManager.Instance.actionHolder;
+    public Action() {
+        this.targets = new List<GameObject>();
     }
-    
-    public void Init(GameObject self, GameObject target) {
+    public Action(GameObject self, GameObject target) {
         this.self = self;
         this.targets = new List<GameObject>();
         this.targets.Add(target);
     }
-    public void Init(GameObject self, List<GameObject> targets) {
+    public Action(GameObject self, List<GameObject> targets) {
         this.self = self;
         this.targets = targets;
     }
@@ -35,11 +39,7 @@ public abstract class Action : MonoBehaviour
         if (notifyActionEnd != null) {
             notifyActionEnd(this);
         }
-
-        Destroy(this);
-    }
-
-    public Cat GetCat() {
-        return self.GetComponent<Cat>();
+        ;
+        //Destroy(this);
     }
 }
