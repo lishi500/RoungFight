@@ -14,6 +14,12 @@ public class PlayerParty : Party
         EnablePlayerAction();
     }
 
+    public override void OnActionEnd() {
+        if (boardManager.IsPlayerRound() && boardManager.IsPlayerAlreadyActioned()) {
+            roundManager.MoveToNextRountParty();
+        }
+    }
+
     public void AddCat(Cat cat) {
         cats.Add(cat);
         cat.notifyCatActionEnd += ListenCatActionEnd;
@@ -29,7 +35,7 @@ public class PlayerParty : Party
     }
 
     private void EnablePlayerAction() {
-        BoardManager.Instance.EnablePlayerAction();
+        boardManager.EnablePlayerAction();
     }
 
     protected override void Awake() {
@@ -40,4 +46,5 @@ public class PlayerParty : Party
             cat.notifyCatActionEnd += ListenCatActionEnd;
         }
     }
+
 }

@@ -30,7 +30,7 @@ public class UIToWorld : MonoBehaviour
     }
 
     public void MoveToPosition(Vector3 position) {
-        Debug.Log("MoveToPosition" + position.ToString());
+        //Debug.Log("MoveToPosition" + position.ToString());
         if (isAboveSprite) {
             position.y = position.y + (GetSpriteHeight() / 2);
         }

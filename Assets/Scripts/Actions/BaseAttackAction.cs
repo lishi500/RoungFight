@@ -12,7 +12,7 @@ public class BaseAttackAction : Action
         foreach (Creature to in toS) {
             BaseAttack(from, to);
         }
-        
+        ActionEnd();
     }
 
     public void BaseAttack(Creature from, Creature to) {

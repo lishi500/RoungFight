@@ -18,6 +18,10 @@ public class EnemyParty : Party
         BossAction();
     }
 
+    public override void OnActionEnd() {
+        OnRoundEnd();
+    }
+
     protected void BossAction() {
         boss.notifyEnemyEnd += OnBossActionEnd;
         boss.BaseAction();
@@ -60,8 +64,10 @@ public class EnemyParty : Party
 
     // Start is called before the first frame update
 
-    private void Awake() {
+    protected override void Awake() {
         boss = GetComponentInChildren<Boss>();
         creeps = GetComponentsInChildren<Creeps>();
     }
+
+   
 }

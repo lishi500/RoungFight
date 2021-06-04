@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Party : MonoBehaviour
-{
+public abstract class Party : MonoBehaviour {
     public PartyType partyType;
     public delegate void PartRoundStartEvent(Party party);
     public event PartRoundStartEvent notifyPartyRoundStart;
@@ -11,12 +10,17 @@ public abstract class Party : MonoBehaviour
     public event PartRoundEndEvent notifyPartyRoundEnd;
     public ActionChain actionChain;
 
+    protected BoardManager boardManager {
+        get { return BoardManager.Instance; }
+    }
+
+    protected RoundManager roundManager {
+        get { return RoundManager.Instance; }
+    }
+
     //public abstract void CanStartRound();
     public abstract void StartRound();
-
-    public void AddAction(Action action) {
-        actionChain.AddAction(action);
-    }
+    public abstract void OnActionEnd();
 
     public void StartActionChain() {
         if (!actionChain.isStarted && !actionChain.isExecuting) {
@@ -34,11 +38,18 @@ public abstract class Party : MonoBehaviour
         if (notifyPartyRoundEnd != null) {
             notifyPartyRoundEnd(this);
         }
-        RoundManager.Instance.MoveToNextRountParty();
+        roundManager.MoveToNextRountParty();
     }
+
+    protected void OnActionAdd(Action action) {
+        StartActionChain();
+    }
+
 
     protected virtual void Awake() {
         actionChain = GetComponent<ActionChain>();
+        actionChain.notifyAddAction += OnActionAdd;
+        actionChain.notifyActionChainEnd += OnActionEnd;
     }
 
 }

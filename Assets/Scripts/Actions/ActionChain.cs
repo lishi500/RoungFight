@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActionChain : MonoBehaviour
 {
-    Queue<Action> actionQueue;
+    LinkedList<Action> actionQueue;
     Action currentAction;
 
     public bool isExecuting {
@@ -18,7 +18,10 @@ public class ActionChain : MonoBehaviour
     private bool m_isStarted = false;
     public float waitTimeIntervalBetweenActions = 0.3f;
 
-    public delegate void ActionChainEndEvent(ActionChain actionChain);
+    public delegate void ActionChainAddEvent(Action action);
+    public event ActionChainAddEvent notifyAddAction;
+
+    public delegate void ActionChainEndEvent();
     public event ActionChainEndEvent notifyActionChainEnd;
 
     public void StartActionChain() {
@@ -29,11 +32,18 @@ public class ActionChain : MonoBehaviour
     }
 
     public void AddAction(Action action) {
-        actionQueue.Enqueue(action);
+        actionQueue.AddLast(action);
+        OnAddAction(action);
+    }
+
+    public void AddActionJumpQueue(Action action) {
+        actionQueue.AddFirst(action);
+        OnAddAction(action);
     }
 
     private void MoveToNextAction() {
-        currentAction = actionQueue.Dequeue();
+        currentAction = actionQueue.First.Value;
+        actionQueue.RemoveFirst();
     }
 
     private void ExecuteCurrentTask() {
@@ -54,22 +64,28 @@ public class ActionChain : MonoBehaviour
         }
     }
 
+    private void OnAddAction(Action action) {
+        if (notifyAddAction != null) {
+            notifyAddAction(action);
+        }
+    }
+
     private IEnumerator WaitAndStartNextAction() {
         yield return new WaitForSeconds(waitTimeIntervalBetweenActions);
         m_isExecuting = false;
     }
 
     private void Awake() {
-        actionQueue = new Queue<Action>();
+        actionQueue = new LinkedList<Action>();
     }
 
     public void Update() {
         if (m_isStarted && !m_isExecuting) {
             if (IsAllTaskCompleted()) {
                 if (notifyActionChainEnd != null) {
-                    notifyActionChainEnd(this);
+                    notifyActionChainEnd();
                 }
-                Destroy(this);
+                //Destroy(this);
             } else {
                 ExecuteNextAction();
             }

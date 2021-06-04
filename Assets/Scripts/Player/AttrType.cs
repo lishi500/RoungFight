@@ -4,6 +4,8 @@ using UnityEngine;
 
 public enum AttrType
 {
+    None, // just value only
+
     Health,
     Attack,
     Defence,

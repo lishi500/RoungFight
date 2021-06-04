@@ -7,7 +7,7 @@ public class Cat : Creature
     public Attribute Energy {
         get { return GetAttr(AttrType.Energy); }
     }
-    private int m_pending_energy;
+    private float m_pending_energy;
 
     public delegate void CatActionEndEvent(Cat cat);
     public event CatActionEndEvent notifyCatActionEnd;
@@ -21,12 +21,12 @@ public class Cat : Creature
 
     public override void BaseAction() {
         NormalAttack();
-        OnCatActionEnd();
+        //OnCatActionEnd();
     }
 
     public void NormalAttack() {
-        Action baseAttack = new BaseAttackAction(transform.gameObject, BoardManager.Instance.enemyParty.boss.gameObject);
-        baseAttack.StartAction();
+        Action baseAttack = new BaseAttackAction(transform.gameObject, enemyParty.boss.gameObject);
+        playerParty.actionChain.AddAction(baseAttack);
     }
 
     public override void OnDie() {
@@ -34,26 +34,42 @@ public class Cat : Creature
     }
 
     public void CastCatPrimarySkill() {
-        
+        ClearEnergy();
+        NormalAttack();
     }
 
-    public void ChargeEnergy(int energy) {
+    public void ChargeEnergy(float energy) {
         if (energy > Energy.maxValue - Energy.value) {
-            m_pending_energy += energy - (int)(Energy.maxValue - Energy.value);
+            m_pending_energy += energy - (Energy.maxValue - Energy.value);
         }
         Energy.AddValue(energy);
-        // TODO boost by energy gain
     }
 
-    protected virtual void OnEnergyChange() {
+    protected virtual void OnEnergyChange(Attribute attr) {
         if (Energy.value == Energy.maxValue) {
             CastCatPrimarySkill();
         }
+
+        if (m_pending_energy != 0) {
+            float tempPending = m_pending_energy;
+            m_pending_energy = 0;
+            ChargeEnergy(tempPending);
+        }
+    }
+
+    private void ClearEnergy() {
+        Energy.value = 0;
     }
 
     private void OnCatActionEnd() {
         if (notifyCatActionEnd != null) {
             notifyCatActionEnd(this);
+        }
+    }
+
+    private void Awake() {
+        if (Energy != null) {
+            Energy.notifyValueChange += OnEnergyChange;
         }
     }
 }

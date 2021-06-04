@@ -24,10 +24,6 @@ public class BoardManager : Singleton<BoardManager> {
         m_isPlayerActionEnabled = false;
     }
 
-    // temp
-    public void PlayerActionEnd() {
-       
-    }
 
     public LevelBase GetCurrentLevel() {
         if (m_level == null) {
@@ -35,6 +31,15 @@ public class BoardManager : Singleton<BoardManager> {
         }
         return m_level;
     }
+
+    public bool IsPlayerRound() {
+        return RoundManager.Instance.currentParty.partyType == PartyType.Player;
+    }
+
+    public bool IsPlayerAlreadyActioned() {
+        return IsPlayerRound() && !IsPlayerActionEnabled;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

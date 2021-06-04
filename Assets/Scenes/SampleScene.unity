@@ -169,21 +169,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attributes:
-  - type: 1
+  - type: 2
     m_value: 15
     m_maxValue: 100
     minValue: 0
     weightAdder: 0
     weightModifier: 1
     isInverseCalc: 0
-  - type: 3
+  - type: 4
     m_value: 30
     m_maxValue: 100
     minValue: 0
     weightAdder: 0
     weightModifier: 1
     isInverseCalc: 0
-  - type: 5
+  - type: 6
     m_value: 0
     m_maxValue: 8
     minValue: 0
@@ -307,22 +307,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attributes:
-  - type: 0
+  - type: 1
     m_value: 500
     m_maxValue: 500
     minValue: 0
     weightAdder: 0
     weightModifier: 1
     isInverseCalc: 0
-  - type: 1
-    m_value: 10
-    m_maxValue: 100
-    minValue: 0
-    weightAdder: 0
-    weightModifier: 1
-    isInverseCalc: 0
   - type: 2
-    m_value: 5
+    m_value: 10
     m_maxValue: 100
     minValue: 0
     weightAdder: 0
@@ -336,6 +329,13 @@ MonoBehaviour:
     weightModifier: 1
     isInverseCalc: 0
   - type: 4
+    m_value: 5
+    m_maxValue: 100
+    minValue: 0
+    weightAdder: 0
+    weightModifier: 1
+    isInverseCalc: 0
+  - type: 5
     m_value: 0
     m_maxValue: 100
     minValue: 0
@@ -632,7 +632,7 @@ MonoBehaviour:
   cat2: {fileID: 380144572}
   NextEnergy: 0
   NextCat: {fileID: 0}
-  player: {fileID: 0}
+  player: {fileID: 914619599}
 --- !u!1 &555328323
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,21 +868,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attributes:
-  - type: 0
+  - type: 1
     m_value: 100
     m_maxValue: 100
     minValue: 0
     weightAdder: 0
     weightModifier: 1
     isInverseCalc: 0
-  - type: 2
+  - type: 3
     m_value: 10
     m_maxValue: 100
     minValue: 0
     weightAdder: 0
     weightModifier: 1
     isInverseCalc: 0
-  - type: 4
+  - type: 5
     m_value: 0
     m_maxValue: 100
     minValue: 0
@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creature: {fileID: 380144572}
-  type: 5
+  type: 6
 --- !u!114 &1427775364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1381,21 +1381,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attributes:
-  - type: 1
+  - type: 2
     m_value: 25
     m_maxValue: 100
     minValue: 0
     weightAdder: 0
     weightModifier: 1
     isInverseCalc: 0
-  - type: 3
+  - type: 4
     m_value: 15
     m_maxValue: 100
     minValue: 0
     weightAdder: 0
     weightModifier: 1
     isInverseCalc: 0
-  - type: 5
+  - type: 6
     m_value: 0
     m_maxValue: 10
     minValue: 0
@@ -1575,7 +1575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creature: {fileID: 1449359296}
-  type: 5
+  type: 6
 --- !u!114 &1556202083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1819,7 +1819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creature: {fileID: 512852712}
-  type: 0
+  type: 1
 --- !u!1 &1993761705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1871,7 +1871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creature: {fileID: 914619599}
-  type: 0
+  type: 1
 --- !u!114 &1993761708
 MonoBehaviour:
   m_ObjectHideFlags: 0

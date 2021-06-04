@@ -15,8 +15,10 @@ public class TestButton : MonoBehaviour
     private Text buttonText;
 
     public void ChargeEnergyToCat() {
+        Debug.Log("Test button Clicked ---------------------");
         if (BoardManager.Instance.IsPlayerActionEnabled) {
-            player.playerActionController.ChargeEnergyAction(NextCat, NextEnergy);
+            Debug.Log("Player charge action Start !!");
+            player.playerActionController.ChargeEnergy(NextCat, NextEnergy);
             RandomNext();
         }
     }

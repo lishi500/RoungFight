@@ -5,8 +5,7 @@ using UnityEngine;
 
 
 [Serializable]
-public class Attribute
-{
+public class Attribute {
     public delegate void AttributeValueChangeEvent(Attribute attr);
     public event AttributeValueChangeEvent notifyValueChange;
 
@@ -66,6 +65,10 @@ public class Attribute
 
     public void AddValue(float add) {
         float newValue = m_value + add;
+
+        if (type == AttrType.Energy) {
+            Debug.Log("Add energy from " + value + " to " + newValue);
+        }
         SetValue(newValue);
     }
 
@@ -74,9 +77,16 @@ public class Attribute
         SetValue(newValue);
     }
 
-   
+
     public float GetWeightedProcessedValue() {
         return weight * GetCalculatedValue();
+    }
+
+    public static Attribute Of(float val, AttrType attrType = AttrType.None) {
+        Attribute attr = new Attribute();
+        attr.value = val;
+        attr.type = attrType;
+        return attr;
     }
 
     private void NotifyChange() {

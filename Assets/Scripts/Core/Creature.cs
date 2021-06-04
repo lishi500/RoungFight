@@ -10,6 +10,12 @@ public abstract class Creature : MonoBehaviour
     public Skill primarySkill;
     public Skill secondarySkill;
     public Creature target;
+    public PlayerParty playerParty {
+        get { return BoardManager.Instance.playerParty;  }
+    }
+    public EnemyParty enemyParty { 
+        get { return BoardManager.Instance.enemyParty;  }
+    }
 
     public abstract void BaseAction();
 
@@ -66,7 +72,7 @@ public abstract class Creature : MonoBehaviour
             if (health.GetCalculatedValue() <= 0) {
                 OnDie();
             }
-            Debug.Log("Health Left:" + health.GetCalculatedValue());
+            //Debug.Log("Health Left:" + health.GetCalculatedValue());
         }
     }
 

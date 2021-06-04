@@ -25,9 +25,9 @@ public class Player : Creature
 
     void Start()
     {
-        foreach (Attribute attr in attributes) {
-            Debug.Log(attr.ToString());
-        }
+        //foreach (Attribute attr in attributes) {
+        //    Debug.Log(attr.ToString());
+        //}
     }
 
     // Update is called once per frame

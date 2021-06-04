@@ -16,7 +16,7 @@ public class DamageHelper : Singleton<DamageHelper>
         float criticalChange = from.GetAttrVal(AttrType.Critical);
         float targetArmor = to.GetAttrVal(AttrType.Defence);
         float targetArmorDefence = CalculateArmorDefence(targetArmor);
-        Debug.Log(to.name + " Armor:" + targetArmor + " Reduce:" + targetArmorDefence + " base damage: " + baseDamage);
+        //Debug.Log(to.name + " Armor:" + targetArmor + " Reduce:" + targetArmorDefence + " base damage: " + baseDamage);
         // TODO extra damage reduction
 
         return CalculateDamage(baseDamage, criticalChange, damageType, targetArmorDefence);
@@ -35,7 +35,7 @@ public class DamageHelper : Singleton<DamageHelper>
             damageDef.damage = damageDef.damage * 2;
         }
         damageDef.damage = Mathf.Round(damageDef.damage);
-        Debug.Log("Deal damage: " + damageDef.damage + " isCritical:" + damageDef.isCritical);
+        //Debug.Log("Deal damage: " + damageDef.damage + " isCritical:" + damageDef.isCritical);
         return damageDef;
     }
 
