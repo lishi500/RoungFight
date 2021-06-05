@@ -43,10 +43,4 @@ public class UIAttributeMeter : MonoBehaviour
             OnAttributeChange(monitorAttribute);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

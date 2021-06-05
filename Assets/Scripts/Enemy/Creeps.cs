@@ -9,10 +9,8 @@ public class Creeps : EnemyBase
     }
 
     public override void BaseAction() {
-        Creature target = BoardManager.Instance.playerParty.player;
-        DamageDef damageDef = DamageHelper.Instance.CalculateDamage(GetAttrVal(AttrType.Attack), this, target, DamageType.NORMAL);
-        target.ReduceHealth(damageDef);
-        ActionFinished();
+        Action baseAttack = new BaseAttackAction(transform.gameObject, playerParty.player.gameObject);
+        enemyParty.actionChain.AddAction(baseAttack);
     }
 
     // Start is called before the first frame update

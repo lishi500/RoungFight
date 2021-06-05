@@ -24,7 +24,7 @@ public class ActionChain : MonoBehaviour
     public delegate void ActionChainEndEvent();
     public event ActionChainEndEvent notifyActionChainEnd;
 
-    public void StartActionChain() {
+    public void Start() {
         m_isStarted = true;
     }
     public bool IsAllTaskCompleted() {

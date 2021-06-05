@@ -65,10 +65,6 @@ public class Attribute {
 
     public void AddValue(float add) {
         float newValue = m_value + add;
-
-        if (type == AttrType.Energy) {
-            Debug.Log("Add energy from " + value + " to " + newValue);
-        }
         SetValue(newValue);
     }
 

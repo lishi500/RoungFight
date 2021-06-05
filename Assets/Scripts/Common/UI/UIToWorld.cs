@@ -46,6 +46,9 @@ public class UIToWorld : MonoBehaviour
 
     private float GetSpriteHeight() {
         SpriteRenderer sprite = followObj.GetComponent<SpriteRenderer>();
+        if (sprite == null) {
+            sprite = followObj.GetComponentInChildren<SpriteRenderer>();
+        }
 
         float height = 0;
         if (sprite != null) {

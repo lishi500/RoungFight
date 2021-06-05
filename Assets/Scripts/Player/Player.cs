@@ -19,20 +19,9 @@ public class Player : Creature
         // game failed
     }
 
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         playerActionController = transform.GetComponent<PlayerActionController>();
     }
 
-    void Start()
-    {
-        //foreach (Attribute attr in attributes) {
-        //    Debug.Log(attr.ToString());
-        //}
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -24,7 +24,6 @@ public class BoardManager : Singleton<BoardManager> {
         m_isPlayerActionEnabled = false;
     }
 
-
     public LevelBase GetCurrentLevel() {
         if (m_level == null) {
             m_level = this.transform.gameObject.GetComponent<LevelBase>();

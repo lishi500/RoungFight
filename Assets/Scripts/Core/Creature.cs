@@ -10,6 +10,7 @@ public abstract class Creature : MonoBehaviour
     public Skill primarySkill;
     public Skill secondarySkill;
     public Creature target;
+    public CustomAnimationController animationController;
     public PlayerParty playerParty {
         get { return BoardManager.Instance.playerParty;  }
     }
@@ -74,6 +75,10 @@ public abstract class Creature : MonoBehaviour
             }
             //Debug.Log("Health Left:" + health.GetCalculatedValue());
         }
+    }
+
+    protected virtual void Awake() {
+        animationController = GetComponentInChildren<CustomAnimationController>();
     }
 
 }

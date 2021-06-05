@@ -22,8 +22,4 @@ public class PlayerActionController : MonoBehaviour
 
         // listen action chain end
     }
-
-    public void OnActionChainEnd() {
-        RoundManager.Instance.MoveToNextRountParty();
-    }
 }

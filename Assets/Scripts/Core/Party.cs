@@ -20,11 +20,11 @@ public abstract class Party : MonoBehaviour {
 
     //public abstract void CanStartRound();
     public abstract void StartRound();
-    public abstract void OnActionEnd();
+    public abstract void OnActionChainEnd();
 
     public void StartActionChain() {
         if (!actionChain.isStarted && !actionChain.isExecuting) {
-            actionChain.StartActionChain();
+            actionChain.Start();
         }
     }
 
@@ -49,7 +49,7 @@ public abstract class Party : MonoBehaviour {
     protected virtual void Awake() {
         actionChain = GetComponent<ActionChain>();
         actionChain.notifyAddAction += OnActionAdd;
-        actionChain.notifyActionChainEnd += OnActionEnd;
+        actionChain.notifyActionChainEnd += OnActionChainEnd;
     }
 
 }

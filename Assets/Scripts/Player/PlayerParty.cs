@@ -14,26 +14,13 @@ public class PlayerParty : Party
         EnablePlayerAction();
     }
 
-    public override void OnActionEnd() {
+    public override void OnActionChainEnd() {
         if (boardManager.IsPlayerRound() && boardManager.IsPlayerAlreadyActioned()) {
-            roundManager.MoveToNextRountParty();
+            Debug.Log("Player Round end");
+            OnRoundEnd();
         }
     }
-
-    public void AddCat(Cat cat) {
-        cats.Add(cat);
-        cat.notifyCatActionEnd += ListenCatActionEnd;
-    }
-
-    // Temp
-    public void OnPlayerActionEnd() {
-        OnRoundEnd();
-    }
-
-    public void ListenCatActionEnd(Cat cat) {
-        OnPlayerActionEnd();
-    }
-
+   
     private void EnablePlayerAction() {
         boardManager.EnablePlayerAction();
     }
@@ -42,9 +29,5 @@ public class PlayerParty : Party
         base.Awake();
         player = GetComponentInChildren<Player>();
         cats = GetComponentsInChildren<Cat>().ToList();
-        foreach (Cat cat in cats) {
-            cat.notifyCatActionEnd += ListenCatActionEnd;
-        }
     }
-
 }

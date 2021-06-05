@@ -9,7 +9,7 @@ public class ChargeEnergyAction : Action
     public override void StartAction() {
         Cat cat = targets[0].GetComponent<Cat>();
         if (cat != null && actionAttr != null) {
-            Debug.Log("Charge energy Action: " + cat.name + " : " + actionAttr.GetCalculatedValue());
+            //Debug.Log("Charge energy Action: " + cat.name + " : " + actionAttr.GetCalculatedValue());
             cat.ChargeEnergy(actionAttr.GetCalculatedValue());
         }
         ActionEnd();

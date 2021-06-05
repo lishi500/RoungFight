@@ -18,22 +18,23 @@ public class EnemyParty : Party
         BossAction();
     }
 
-    public override void OnActionEnd() {
-        OnRoundEnd();
+    public override void OnActionChainEnd() {
+        
     }
 
     protected void BossAction() {
-        boss.notifyEnemyEnd += OnBossActionEnd;
+        actionChain.notifyActionChainEnd += OnBossActionEnd;
         boss.BaseAction();
     }
 
     protected void CreepsAction() {
         NextCreeps();
         if (m_current_creeps != null) {
-            m_current_creeps.notifyEnemyEnd += OnCreepActionEnd;
+            actionChain.notifyActionChainEnd += OnCreepActionEnd;
             m_current_creeps.BaseAction();
         } else {
             ResetAllActionFlag();
+            Debug.Log("Enermy Round end");
             OnRoundEnd();
         }
     }
@@ -46,12 +47,12 @@ public class EnemyParty : Party
     }
 
     void OnBossActionEnd() {
+        actionChain.notifyActionChainEnd -= OnBossActionEnd;
         CreepsAction();
-        boss.notifyEnemyEnd -= OnBossActionEnd;
     }
 
     void OnCreepActionEnd() {
-        m_current_creeps.notifyEnemyEnd -= OnCreepActionEnd;
+        actionChain.notifyActionChainEnd -= OnCreepActionEnd;
         CreepsAction();
     }
 
@@ -65,6 +66,7 @@ public class EnemyParty : Party
     // Start is called before the first frame update
 
     protected override void Awake() {
+        base.Awake();
         boss = GetComponentInChildren<Boss>();
         creeps = GetComponentsInChildren<Creeps>();
     }
