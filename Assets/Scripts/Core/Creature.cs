@@ -66,7 +66,9 @@ public abstract class Creature : MonoBehaviour
             }
 
             health.SubValue(amount);
-            // TODO show hit damage
+            if (amount > 0) {
+                ShowGetHitAnimation();
+            }
             DamageTextPool.Instance.PopDamage(this.gameObject, damageDef);
             // send hit event
 
@@ -75,6 +77,16 @@ public abstract class Creature : MonoBehaviour
             }
             //Debug.Log("Health Left:" + health.GetCalculatedValue());
         }
+    }
+
+    protected virtual void ShowGetHitAnimation() {
+        animationController.SetBoolState(AnimationState.GET_HIT);
+        animationController.eventHelper.notifyAnimationEnd += OnHitAnimationEnd;
+    }
+
+    private void OnHitAnimationEnd() {
+        animationController.SetAllFalse();
+        animationController.eventHelper.notifyAnimationEnd -= OnHitAnimationEnd;
     }
 
     protected virtual void Awake() {
