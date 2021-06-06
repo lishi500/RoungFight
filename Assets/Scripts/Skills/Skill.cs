@@ -18,21 +18,17 @@ public abstract class Skill : MonoBehaviour {
     public SkillType type {
         get { return skillData.type; }
     }
-
-    public float duration;
-    public float baseValue;
-    public float factor;
-    public float castRange = float.MaxValue; // for AI, range that this skill should be cast
-    public DamageType damageType;
-
-    public bool loopCast;
-    public bool isChannelSkill;
-    //public ShootPointPosition shootPointPosition = ShootPointPosition.MID;
+    public List<SkillFactor> factors {
+        get { return skillData.factors; }
+    }
+   
 
     public bool hasEffectController;
-    public bool hasCollisionController;
-    public bool needTarget = true;
+    //public bool hasCollisionController;
     public bool isTargetAllies = false;
+    public GameObject targetObj;
+    public List<GameObject> targetObjs;
+
 
     [HideInInspector]
     public int CDLeft = 0;
@@ -51,13 +47,12 @@ public abstract class Skill : MonoBehaviour {
         get { return isReady; }
     }
 
-
-    //public List<EffectChain> effectChains;
+    public List<EffectChain> effectChains;
     //public List<EffectCollider> colliderChains;
     //public List<SkillAttachedBuff> triggeredBuffDefs;
     //public List<SkillAttachedBuff> onApplyBuffDefs;
 
-    //public BaseEffect OnCastEffect; // position caster
+    public BaseEffect OnCastEffect; // position caster
     //public BaseEffect OnTriggerEffect;
 
     public delegate void StartCDDelegate();
@@ -69,11 +64,12 @@ public abstract class Skill : MonoBehaviour {
     public delegate void SkillCDChangeDelegate(Skill skill);
     public event SkillCDChangeDelegate notifySkillCDChange;
 
+
     //public SkillAnimationDef skillAnimations;
     public abstract void SkillSetup();
     public abstract void OnSkillAd();
     public abstract void OnSkillCast();
-    public abstract void UpdateCollider();
+    //public abstract void UpdateCollider();
     public abstract void UpdateEffect();
 
     //public virtual bool OnColliderTrigger(Transform collideObj, int colliderIndex = 0) {
@@ -82,12 +78,11 @@ public abstract class Skill : MonoBehaviour {
     //    return true;
     //}
 
-    public virtual float CalculateValue() {
+    public virtual float CalculateValue(int phase = 0) {
+        SkillFactor factor = factors[phase];
         float attack = owner.GetAttrVal(AttrType.Attack);
-        return baseValue + (attack * factor);
+        return factor.baseValue + (attack * factor.factor);
     }
-
-    public virtual GameObject GetCustomTarget() { return null; }
 
     //public virtual void ApplyBuffsToRole(List<SkillAttachedBuff> buffDefs, Role role) {
     //    foreach (SkillAttachedBuff buffDef in buffDefs) {
@@ -138,6 +133,12 @@ public abstract class Skill : MonoBehaviour {
         }
     }
 
+    protected void QuickDamage(Creature tar, int phase = 0) {
+        float damagePhase = CalculateValue(phase);
+        DamageDef damageDef = DamageHelper.Instance.CalculateDamage(damagePhase, owner, tar, factors[phase].damageType);
+        tar.ReduceHealth(damageDef);
+    }
+
     //public void StartSkillAnimation() {
     //    if (skillAnimations != null && skillAnimations.hasCustomSkillAnimation
     //        && ownerRole != null && ownerRole.animationController != null) {
@@ -172,15 +173,14 @@ public abstract class Skill : MonoBehaviour {
 
     protected virtual void Start() {
         CDLeft = 0;
-        GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
-
+        //GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
     }
     protected virtual void Update() {
-        if (hasEffectController) {
-            UpdateEffect();
-        }
-        if (hasCollisionController) {
-            UpdateCollider();
-        }
+        //if (hasEffectController) {
+        //    UpdateEffect();
+        //}
+        //if (hasCollisionController) {
+        //    UpdateCollider();
+        //}
     }
 }

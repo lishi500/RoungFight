@@ -16,8 +16,11 @@ public class Cat : Creature
 
 
     public void CastCatPrimarySkill() {
+        Debug.Log("CastCatPrimarySkill");
         ClearEnergy();
-        BaseAction();
+        CastSkillAction castSkillAction = new CastSkillAction(gameObject, enemyParty.boss.gameObject);
+        castSkillAction.skill = primarySkill;
+        playerParty.actionChain.AddAction(castSkillAction);
     }
 
     public void ChargeEnergy(float energy) {

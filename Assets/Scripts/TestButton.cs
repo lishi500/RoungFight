@@ -24,7 +24,7 @@ public class TestButton : MonoBehaviour
     }
 
     private void RandomNext() {
-        NextEnergy = Random.Range(2, 13);
+        NextEnergy = Random.Range(6, 20);
         int next = Random.Range(0, 2);
         if (next == 0) {
             NextCat = cat1;

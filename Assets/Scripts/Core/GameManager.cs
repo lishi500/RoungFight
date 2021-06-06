@@ -6,6 +6,7 @@ public class GameManager : Singleton<GameManager>
 {
     public Cat testCat;
     public GameObject actionHolder;
+    public Transform centerFightPoint;
 
     protected override void Awake() {
         base.Awake();
