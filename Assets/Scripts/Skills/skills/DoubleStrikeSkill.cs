@@ -5,12 +5,11 @@ using UnityEngine;
 public class DoubleStrikeSkill : Skill
 {
     // SkillType.Active
-    Creature target;
     public override void OnSkillCast() {
-        Debug.Log("DoubleStrikeSkill OnSkillCast");
+        //Debug.Log("DoubleStrikeSkill OnSkillCast");
         StartCoroutine(SkillProgress());
     }
-    IEnumerator SkillProgress() {
+    protected override IEnumerator SkillProgress() {
         yield return new WaitForSeconds(0.1f);
         QuickDamage(target, 0);
 
@@ -22,8 +21,8 @@ public class DoubleStrikeSkill : Skill
 
     public override void OnSkillAd() { }
 
-    public override void SkillSetup() { 
-        target = targetObj.GetComponent<Creature>();
+    public override void SkillSetup() {
+        LoadTargetCreature();
     }
 
 }

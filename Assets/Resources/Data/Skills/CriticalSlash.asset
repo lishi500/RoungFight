@@ -10,22 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea701bab84fc97c4ea96a19a27463c3b, type: 3}
-  m_Name: DoubleStrike
+  m_Name: CriticalSlash
   m_EditorClassIdentifier: 
-  ID: 100
-  Name: DoubleStrike
+  ID: 101
+  Name: Critical Slash
   type: 0
-  skillBehaviorTypes: 00000000
+  skillBehaviorTypes: 
   factors:
-  - baseValue: 10
-    factor: 1.2
-    damageType: 1
-  - baseValue: 25
+  - baseValue: 50
     factor: 1.5
     damageType: 1
-  Icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
-  Description: Strike two times
-  liveDuration: 0.4
+  Icon: {fileID: 0}
+  Description: Critical Slash
+  liveDuration: 0.3
   Cooldown: 0
   CanDuplicate: 1
   IsMultiTarget: 0

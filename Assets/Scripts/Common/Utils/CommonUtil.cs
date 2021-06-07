@@ -21,10 +21,15 @@ public class CommonUtil : Singleton<CommonUtil>
     }
 
 // ease in and out
-public float Smoothstep(float t) {
+    public float Smoothstep(float t) {
         return t * t * (3 - 2 * t);
     }
 
+    public GameObject FindPrafab(string prafabName, string subpath = "") {
+        subpath = subpath != "" ? subpath + "/" : "";
+        GameObject variableForPrefab = Resources.Load<GameObject>("Prefabs/" + subpath + prafabName);
+        return variableForPrefab;
+    }
     public GameObject GetPrefabByName(string name) {
         return (GameObject) Resources.Load("Prefabs/" + name);
     }

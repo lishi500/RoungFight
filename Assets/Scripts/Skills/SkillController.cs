@@ -15,8 +15,7 @@ public class SkillController : MonoBehaviour
 
     [HideInInspector]
     public int effectChainIndex;
-    [HideInInspector]
-    public int colliderChainIndex;
+   
     [HideInInspector]
     public float pastTime;
     [HideInInspector]
@@ -122,19 +121,9 @@ public class SkillController : MonoBehaviour
     public virtual void SkillUpdate() { }
     public virtual void OnSkillStop() { }
 
-    void OnDrawGizmos()
-    {
-        // Draw a yellow sphere at the transform's position
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(position1.position, 5);
-        // drawCollider
-        //Gizmos.DrawWireSphere(gizmosColliderPosition, gizmosCollider.radius);
-    }
-
     public virtual void InitialSkill() {
         pastTime = 0;
         effectChainIndex = 0;
-        colliderChainIndex = 0;
         skill.SkillSetup();
 
         skill.StartCastSkill();
@@ -142,14 +131,12 @@ public class SkillController : MonoBehaviour
         isStarted = true;
 
         StartCoroutine(ShowEffectWithDelay(skill.OnCastEffect, skill.owner.transform.position));
-        //Destroy(this, skill.skillData.liveDuration);
+        Destroy(gameObject, skill.skillData.liveDuration + 0.05f);
     }
 
     // Start is called before the first frame update
     void Awake()
     {
-        //GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
-        //prafabHolder = gameManager.GetComponent<PrafabHolder>();
     }
 
     // Update is called once per frame
@@ -186,7 +173,8 @@ public class SkillController : MonoBehaviour
     public event SkillFinishDelegate notifySkillFinish;
 }
 
-
+//[HideInInspector]
+//public int colliderChainIndex;
 
 //void UpdateCollider()
 //{

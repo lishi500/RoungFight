@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,8 @@ public abstract class Skill : MonoBehaviour {
     public bool isTargetAllies = false;
     public GameObject targetObj;
     public List<GameObject> targetObjs;
+    protected Creature target;
+    protected List<Creature> targets;
 
 
     [HideInInspector]
@@ -70,13 +73,8 @@ public abstract class Skill : MonoBehaviour {
     public abstract void OnSkillAd();
     public abstract void OnSkillCast();
     //public abstract void UpdateCollider();
+    protected abstract IEnumerator SkillProgress();
     public abstract void UpdateEffect();
-
-    //public virtual bool OnColliderTrigger(Transform collideObj, int colliderIndex = 0) {
-    //    // return ture, continue process in SkillController
-    //    // return false, handle in skill, skillController will skip
-    //    return true;
-    //}
 
     public virtual float CalculateValue(int phase = 0) {
         SkillFactor factor = factors[phase];
@@ -84,6 +82,15 @@ public abstract class Skill : MonoBehaviour {
         return factor.baseValue + (attack * factor.factor);
     }
 
+    protected virtual void LoadTargetCreature() {
+        if (targetObj != null) {
+            target = targetObj.GetComponent<Creature>();        
+        }
+        if (targetObjs != null) {
+            targets = targetObjs.Select(obj => obj.GetComponent<Creature>()).ToList();
+        }
+        
+    }
     //public virtual void ApplyBuffsToRole(List<SkillAttachedBuff> buffDefs, Role role) {
     //    foreach (SkillAttachedBuff buffDef in buffDefs) {
     //        GameObject buffObj = Instantiate(buffDef.buffObj);

@@ -16,7 +16,7 @@ public class Cat : Creature
 
 
     public void CastCatPrimarySkill() {
-        Debug.Log("CastCatPrimarySkill");
+        //Debug.Log("CastCatPrimarySkill");
         ClearEnergy();
         CastSkillAction castSkillAction = new CastSkillAction(gameObject, enemyParty.boss.gameObject);
         castSkillAction.skill = primarySkill;

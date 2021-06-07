@@ -14,18 +14,22 @@ public class CastSkillAction : Action
             ActionEnd();
             return;
         }
+        // TODO make a skill holder pool
 
-        skill.ownerObj = self;
+        GameObject skillPrefab = SkillHelper.Instance.GetSkillPrefab(skill);
+        GameObject skillObjClone = GameObject.Instantiate(skillPrefab);
+        Skill skillClone = skillObjClone.GetComponent<Skill>();
 
-        if (skill.skillData.IsMultiTarget) {
-            skill.targetObjs = targets;
+        skillClone.ownerObj = self;
+
+        if (skillClone.skillData.IsMultiTarget) {
+            skillClone.targetObjs = targets;
         } else {
-            skill.targetObj = targets[0];
+            skillClone.targetObj = targets[0];
         }
 
-
-        SkillController skillController = self.AddComponent<SkillController>();
-        skillController.skill = skill;
+        SkillController skillController = skillObjClone.AddComponent<SkillController>();
+        skillController.skill = skillClone;
         skillController.creator = self;
         skillController.primaryTarget = targets[0];
         skillController.targets = targets;
