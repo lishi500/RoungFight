@@ -6,6 +6,7 @@ using UnityEngine;
 
 [System.Serializable]
 public abstract class Skill : MonoBehaviour {
+    public int sequenceId;
     public SkillData skillData;
     public string skillName {
         get { return skillData.Name; }
@@ -23,7 +24,6 @@ public abstract class Skill : MonoBehaviour {
         get { return skillData.factors; }
     }
    
-
     public bool hasEffectController;
     //public bool hasCollisionController;
     public bool isTargetAllies = false;
@@ -41,7 +41,9 @@ public abstract class Skill : MonoBehaviour {
         get { return ownerObj.GetComponent<Creature>(); }
     }
     [HideInInspector]
-    public GameObject skillControllerObj;
+    public SkillController skillController {
+        get { return GetComponent<SkillController>(); }
+    }
     [NonSerialized]
     public bool canCd = true;
     [NonSerialized]
@@ -140,10 +142,12 @@ public abstract class Skill : MonoBehaviour {
         }
     }
 
-    protected void QuickDamage(Creature tar, int phase = 0) {
+    protected DamageDef QuickDamage(Creature tar, int phase = 0) {
         float damagePhase = CalculateValue(phase);
         DamageDef damageDef = DamageHelper.Instance.CalculateDamage(damagePhase, owner, tar, factors[phase].damageType);
         tar.ReduceHealth(damageDef);
+
+        return damageDef;
     }
 
     //public void StartSkillAnimation() {

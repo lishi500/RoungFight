@@ -9,6 +9,7 @@ public abstract class Creature : MonoBehaviour
     public bool isAlive = true;
     public Skill primarySkill;
     public Skill secondarySkill;
+    public List<BaseBuff> buffs;
     public Creature target;
     public CustomAnimationController animationController;
     public PlayerParty playerParty {

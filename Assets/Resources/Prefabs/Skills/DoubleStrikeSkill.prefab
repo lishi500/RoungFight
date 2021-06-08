@@ -43,17 +43,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4d60e8c4b121840a16baa359184e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uuid: 
   skillData: {fileID: 11400000, guid: 5ab15c68aeb28f14bace988a06f9ef81, type: 2}
-  baseValue: 10
-  factor: 1.2
-  damageType: 1
   hasEffectController: 0
   isTargetAllies: 0
   targetObj: {fileID: 0}
   targetObjs: []
   CDLeft: 0
   ownerObj: {fileID: 0}
-  skillControllerObj: {fileID: 0}
   effectChains:
   - effect: {fileID: 7758322502421264252, guid: c0c246bb3a1d1994ca5f834b569a9ec3, type: 3}
     duration: 1
@@ -65,7 +62,7 @@ MonoBehaviour:
     followRole: 0
   - effect: {fileID: 7758322502421264252, guid: c0c246bb3a1d1994ca5f834b569a9ec3, type: 3}
     duration: 1
-    delay: 0.1
+    delay: 0.2
     positionType: 4
     xOffSet: 0
     yOffSet: -0.2

@@ -13,7 +13,7 @@ public class RoundManager : Singleton<RoundManager> {
 
     public void MoveToNextRountParty() {
         PartyType partyType = PartySchedule.GetNextParty();
-        Debug.Log("Move party To >> " + partyType);
+        //Debug.Log("Move party To >> " + partyType);
 
         switch (partyType) {
             case PartyType.Player:

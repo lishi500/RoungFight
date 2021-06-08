@@ -20,6 +20,9 @@ public class CriticalSlashSkill : Skill
         
         DamageDef damageDef = DamageHelper.Instance.CalculateDamage(baseDamage, 100f, factors[0].damageType, targetArmorDefence);
         target.ReduceHealth(damageDef);
+        Debug.Log(name + ":" + sequenceId + "Damage: " + damageDef.damage + " : " + Time.time);
+
+        skillController.OnSkillFinish();
     }
 
     public override void SkillSetup() {

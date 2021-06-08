@@ -11,10 +11,15 @@ public class DoubleStrikeSkill : Skill
     }
     protected override IEnumerator SkillProgress() {
         yield return new WaitForSeconds(0.1f);
-        QuickDamage(target, 0);
+        DamageDef damageDef0 = QuickDamage(target, 0);
+        Debug.Log(name + ":" + sequenceId + "Phase 0" +  "Damage: " + damageDef0.damage + " : " + Time.time);
 
-        yield return new WaitForSeconds(0.3f);
-        QuickDamage(target, 1);
+
+        yield return new WaitForSeconds(0.2f);
+        DamageDef damageDef1 = QuickDamage(target, 1);
+        Debug.Log(name + ":" + sequenceId + " Phase: 1" + "Damage: " + damageDef1.damage + " : " + Time.time);
+
+        skillController.OnSkillFinish();
     }
 
     public override void UpdateEffect() {}

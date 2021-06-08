@@ -45,9 +45,7 @@ public class SkillController : MonoBehaviour
         float destoryTime = effectChain.duration == 0 ? 3 : effectChain.duration;
         effect.AddComponent<AutoDestroy>().timeToLive = destoryTime;
 
-
         PlayParticleSystem(effect);
-
     }
 
 
@@ -101,6 +99,7 @@ public class SkillController : MonoBehaviour
             EffectChain effectChain = skill.effectChains[effectChainIndex];
             if (effectChain.delay <= pastTime)
             {
+                Debug.Log(skill.name + ":" + skill.sequenceId + " EffectChain: " + effectChainIndex + " : " + Time.time);
                 ShowEffectChain(effectChain, GeneratePositionByType(effectChain.positionType).position);
                 effectChainIndex++;
                 //if (effectChainIndex >= skill.effectChains.Count) {
@@ -125,18 +124,12 @@ public class SkillController : MonoBehaviour
         pastTime = 0;
         effectChainIndex = 0;
         skill.SkillSetup();
-
+        Debug.Log(skill.sequenceId + " start skill " + skill.name);
         skill.StartCastSkill();
         OnSkillCast();
         isStarted = true;
 
         StartCoroutine(ShowEffectWithDelay(skill.OnCastEffect, skill.owner.transform.position));
-        Destroy(gameObject, skill.skillData.liveDuration + 0.05f);
-    }
-
-    // Start is called before the first frame update
-    void Awake()
-    {
     }
 
     // Update is called once per frame
@@ -158,15 +151,11 @@ public class SkillController : MonoBehaviour
 
     }
 
-    private void OnSkillFinish(Skill skill) {
-        Destroy(this);
-    }
-
-    void OnDestroy()
-    {
+    public void OnSkillFinish() {
         if (notifySkillFinish != null) {
             notifySkillFinish();
         }
+        gameObject.SetActive(false);
     }
 
     public delegate void SkillFinishDelegate();

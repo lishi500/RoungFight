@@ -11,7 +11,7 @@ public class EnemyParty : Party
     private Creeps m_current_creeps;
 
     public override void StartRound() {
-        Debug.Log("enemy party start");
+        //Debug.Log("enemy party start");
 
         OnRoundStart();
         // boss action
@@ -34,7 +34,7 @@ public class EnemyParty : Party
             m_current_creeps.BaseAction();
         } else {
             ResetAllActionFlag();
-            Debug.Log("Enermy Round end");
+            //Debug.Log("Enermy Round end");
             OnRoundEnd();
         }
     }

@@ -12,7 +12,7 @@ public class SkillData : ScriptableObject {
     public List<SkillFactor> factors;
     public Sprite Icon;
     public string Description;
-    public float liveDuration;
+    //public float liveDuration;
     public int Cooldown;
     public bool CanDuplicate = true;
     public bool IsMultiTarget = false;

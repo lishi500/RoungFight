@@ -7,6 +7,10 @@ public class GameManager : Singleton<GameManager>
     public Cat testCat;
     public GameObject actionHolder;
     public Transform centerFightPoint;
+    private int m_skillSeq = 0;
+    public int skillSeq {
+        get { return m_skillSeq++; }
+    }
 
     protected override void Awake() {
         base.Awake();

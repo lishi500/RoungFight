@@ -21,6 +21,7 @@ public class CastSkillAction : Action
         Skill skillClone = skillObjClone.GetComponent<Skill>();
 
         skillClone.ownerObj = self;
+        skillClone.sequenceId = GameManager.Instance.skillSeq;
 
         if (skillClone.skillData.IsMultiTarget) {
             skillClone.targetObjs = targets;
