@@ -11,7 +11,6 @@ public abstract class Action
     protected Creature from {
         get { return self.GetComponent<Creature>(); }
     }
-
     protected Creature to {
         get { return targets[0].GetComponent<Creature>(); }
     }

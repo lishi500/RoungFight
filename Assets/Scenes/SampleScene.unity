@@ -1092,23 +1092,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3df3db470088a46a3dfb26405780be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffName: 
-  duration: 0
-  frequency: 0
-  type: 0
+  buffName: Attack Up Buff
+  duration: 3
+  type: 4
   reactTypes: 
   caster: {fileID: 0}
   holder: {fileID: 0}
   partyType: 0
-  value: 0
+  value: 20
   factor: 0
+  maxTriggerTimes: 0
   isDeBuff: 0
   isForever: 0
   canDuplicate: 0
   attachedSkillName: 
   prioirty: 10
   OnApplyEffect:
-    effect: {fileID: 0}
+    effect: {fileID: 6687220412962576281, guid: ec7cd93ddb4294b4db94a4c9aed38ce1, type: 3}
     duration: 1
     delay: 0.1
   OnTriggerEffect:
@@ -1121,8 +1121,8 @@ MonoBehaviour:
     delay: 0.1
   OtherEffects: []
   tirggeredCount: 0
-  attriType: 0
-  attriValueType: 0
+  attriType: 2
+  attriValueType: 1
 --- !u!4 &1194243379
 Transform:
   m_ObjectHideFlags: 0

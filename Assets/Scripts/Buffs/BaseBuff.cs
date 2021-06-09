@@ -10,6 +10,7 @@ public abstract class BaseBuff : MonoBehaviour
     //public float frequency; // gap
     public BuffType type;
     public List<ReactEventType> reactTypes;
+    public TargetType targetType;
 
     [HideInInspector]
     public Creature caster;
@@ -49,6 +50,10 @@ public abstract class BaseBuff : MonoBehaviour
     public abstract void OnBuffApply();
     public abstract void OnBuffRemove();
     public abstract bool CanApplyTo(Creature creature);
+
+    public virtual List<Creature> SelectTargets() {
+        return new List<Creature>();
+    }
     protected virtual void OnRoundStart() {
         OnBuffTrigger();
         roundPasted += 1;
@@ -63,7 +68,6 @@ public abstract class BaseBuff : MonoBehaviour
     }
     public virtual void OnCastSkill(string state)
     {
-
     }
 
     public virtual void OnSkillReady(Skill skill)
@@ -84,7 +88,6 @@ public abstract class BaseBuff : MonoBehaviour
     }
     public virtual void OnDie(string state)
     {
-
     }
     // Possible benefit by other attribute
     public virtual float CalculatValue() {

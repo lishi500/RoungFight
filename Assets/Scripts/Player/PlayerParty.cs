@@ -7,7 +7,7 @@ public class PlayerParty : Party
 {
     public List<Cat> cats;
     public Player player;
-
+    
     public override void StartRound() {
         //Debug.Log("player party start");
         OnRoundStart();

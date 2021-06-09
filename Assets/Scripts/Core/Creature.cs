@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Creature : MonoBehaviour
-{
+public abstract class Creature : MonoBehaviour {
     public List<Attribute> attributes;
     public bool isAlive = true;
     public Skill primarySkill;
@@ -12,6 +11,12 @@ public abstract class Creature : MonoBehaviour
     public List<BaseBuff> buffs;
     public Creature target;
     public CustomAnimationController animationController;
+    public Party party {
+        get { return GetComponentInParent<Party>(); }
+    }
+    public PartyType partyType {
+        get { return party != null ? party.partyType : PartyType.None; }
+    }
     public PlayerParty playerParty {
         get { return BoardManager.Instance.playerParty;  }
     }
