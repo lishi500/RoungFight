@@ -7,13 +7,36 @@ public class ApplyBuffAction : Action
 {
     public string buffName;
     public BaseBuff baseBuff;
+    List<Creature> targetCreatures;
     public override void StartAction() {
-        GameObject buffPrefab = LoadBuffPrefab();
+        GameObject buffPrefabObj = LoadBuffPrefab();
+        SelectBuffTarget(buffPrefabObj);
+
+        foreach (Creature creature in targetCreatures) {
+            GameObject buffObj = GameObject.Instantiate(buffPrefabObj, creature.transform);
+            BaseBuff buff = buffObj.GetComponent<BaseBuff>();
+            buff.caster = from;
+            buff.holder = creature;
+        }
+
+        ActionEnd();
+    }
+
+    private void SelectBuffTarget(GameObject buffPrefab) {
+        targetCreatures = toS;
+
         if (buffPrefab != null) {
-            if (targets == null || targets.Count == 0) { 
-                
+            if (targetCreatures == null || targetCreatures.Count == 0) {
+                BaseBuff buffPre = buffPrefab.GetComponent<BaseBuff>();
+                targetCreatures = buffPre.SelectTargets();
+            }
+
+            if (targetCreatures.Count == 0) {
+                Creature tar = GuessBuffTarget();
+                targetCreatures.Add(tar);
             }
         }
+
     }
 
     private GameObject LoadBuffPrefab() {

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class Party : MonoBehaviour {
     public PartyType partyType;
-    public delegate void PartRoundStartEvent(Party party);
+    public delegate void PartRoundStartEvent();
     public event PartRoundStartEvent notifyPartyRoundStart;
-    public delegate void PartRoundEndEvent(Party party);
+    public delegate void PartRoundEndEvent();
     public event PartRoundEndEvent notifyPartyRoundEnd;
     public ActionChain actionChain;
 
@@ -30,13 +30,13 @@ public abstract class Party : MonoBehaviour {
 
     protected void OnRoundStart() {
         if (notifyPartyRoundStart != null) {
-            notifyPartyRoundStart(this);
+            notifyPartyRoundStart();
         }
     }
 
     protected void OnRoundEnd() {
         if (notifyPartyRoundEnd != null) {
-            notifyPartyRoundEnd(this);
+            notifyPartyRoundEnd();
         }
         roundManager.MoveToNextRountParty();
     }

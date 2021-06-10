@@ -16,8 +16,6 @@ public abstract class BaseBuff : MonoBehaviour
     public Creature caster;
     [HideInInspector]
     public Creature holder;
-    [HideInInspector]
-    public PartyType partyType;
 
     public float value;
     public float factor;
@@ -34,8 +32,8 @@ public abstract class BaseBuff : MonoBehaviour
     public BaseEffect LivingEffect;
     public BaseEffect[] OtherEffects;
 
-
-    private float roundPasted;
+    // TODO make it private
+    public float roundPasted;
     [HideInInspector]
     public int tirggeredCount;
     [HideInInspector]
@@ -172,7 +170,11 @@ public abstract class BaseBuff : MonoBehaviour
         if (holder != null && holder.animationController != null) { 
             eventHelper = holder.animationController.eventHelper;
         }
-       
+        if (holder != null) {
+            holder.party.notifyPartyRoundStart += OnRoundStart;
+            holder.party.notifyPartyRoundEnd += OnRoundEnd;
+        }
+
         RegisterEventListener();
 
         OnBuffApply();
@@ -193,6 +195,8 @@ public abstract class BaseBuff : MonoBehaviour
         if (notifyBuffRemoved != null) {
             notifyBuffRemoved(gameObject);
         }
+        holder.party.notifyPartyRoundStart -= OnRoundStart;
+        holder.party.notifyPartyRoundEnd -= OnRoundEnd;
         OnBuffRemove();
     }
 }
