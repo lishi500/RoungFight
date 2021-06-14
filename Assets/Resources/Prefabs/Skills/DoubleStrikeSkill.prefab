@@ -43,10 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4d60e8c4b121840a16baa359184e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uuid: 
+  sequenceId: 0
   skillData: {fileID: 11400000, guid: 5ab15c68aeb28f14bace988a06f9ef81, type: 2}
   hasEffectController: 0
-  isTargetAllies: 0
+  hasTargetController: 0
   targetObj: {fileID: 0}
   targetObjs: []
   CDLeft: 0
@@ -68,6 +68,11 @@ MonoBehaviour:
     yOffSet: -0.2
     useRoleFacing: 0
     followRole: 0
+  triggeredBuffDefs:
+  - buffObj: {fileID: 8719216809322269220, guid: e173adafd9d65cc4691432b11572e86c, type: 3}
+    targetType: 10
+    skill: {fileID: 0}
+  onApplyBuffDefs: []
   OnCastEffect:
     effect: {fileID: 0}
     duration: 1

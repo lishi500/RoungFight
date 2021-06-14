@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DotBuff : BaseBuff
 {
+    public float damageSnapshot;
     public override bool CanApplyTo(Creature creature) {
         if (creature.GetType() != typeof(Cat)) { 
             return true;
@@ -12,18 +13,23 @@ public class DotBuff : BaseBuff
     }
 
     public override void OnBuffApply() {
+        damageSnapshot = CalculatValue();
     }
 
     public override BuffEvaluatorResult OnBuffEvaluated(BuffEvaluatorResult evaluatorResult) {
-        throw new System.NotImplementedException();
+        return evaluatorResult ;
     }
 
     public override void OnBuffRemove() {
-        throw new System.NotImplementedException();
     }
 
     public override void OnBuffTrigger() {
-        throw new System.NotImplementedException();
+        StartCoroutine(TriggerWithDeplay());
     }
-   
+
+    private IEnumerator TriggerWithDeplay() {
+        yield return new WaitForSeconds(0.2f);
+        DamageDef damageDef = DamageHelper.Instance.CalculateDamage(damageSnapshot, caster, holder, damageType);
+        holder.ReduceHealth(damageDef);
+    }
 }

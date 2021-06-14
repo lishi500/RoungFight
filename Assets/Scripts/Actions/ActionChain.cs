@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ActionChain : MonoBehaviour
 {
-    LinkedList<Action> actionQueue;
-    Action currentAction;
+    LinkedList<ActionWithDelay> actionQueue;
+    ActionWithDelay currentAction;
 
     public bool isExecuting {
         get { return m_isExecuting; }
@@ -16,7 +16,7 @@ public class ActionChain : MonoBehaviour
 
     private bool m_isExecuting = false;
     private bool m_isStarted = false;
-    public float waitTimeIntervalBetweenActions = 0.3f;
+    private const float waitTimeIntervalBetweenActions = 0.4f;
 
     public delegate void ActionChainAddEvent(Action action);
     public event ActionChainAddEvent notifyAddAction;
@@ -24,20 +24,22 @@ public class ActionChain : MonoBehaviour
     public delegate void ActionChainEndEvent();
     public event ActionChainEndEvent notifyActionChainEnd;
 
-    public void Start() {
+    public void StartActionChain() {
         m_isStarted = true;
     }
     public bool IsAllTaskCompleted() {
         return actionQueue.Count == 0;
     }
 
-    public void AddAction(Action action) {
-        actionQueue.AddLast(action);
+    public void AddAction(Action action, float delay = waitTimeIntervalBetweenActions) {
+        ActionWithDelay actionWithDelay = new ActionWithDelay(action, waitTimeIntervalBetweenActions);
+        actionQueue.AddLast(actionWithDelay);
         OnAddAction(action);
     }
 
-    public void AddActionJumpQueue(Action action) {
-        actionQueue.AddFirst(action);
+    public void AddActionJumpQueue(Action action, float delay = waitTimeIntervalBetweenActions) {
+        ActionWithDelay actionWithDelay = new ActionWithDelay(action, waitTimeIntervalBetweenActions);
+        actionQueue.AddFirst(actionWithDelay);
         OnAddAction(action);
     }
 
@@ -48,19 +50,30 @@ public class ActionChain : MonoBehaviour
 
     private void ExecuteCurrentTask() {
         m_isExecuting = true;
-        currentAction.StartAction();
+        currentAction.action.StartAction();
     }
 
     private void ExecuteNextAction() {
         MoveToNextAction();
-        currentAction.notifyActionEnd += ListenActionEnd;
+        currentAction.action.notifyActionEnd += ListenActionEnd;
         ExecuteCurrentTask();
     }
 
     private void ListenActionEnd(Action action) {
-        if (action == currentAction) {
-            currentAction.notifyActionEnd -= ListenActionEnd;
-            StartCoroutine(WaitAndStartNextAction());
+        //Debug.Log("Listen action end " + action.GetType().ToString() + " current " + currentAction.action.GetType().ToString());
+        if (action == currentAction.action) {
+            currentAction.action.notifyActionEnd -= ListenActionEnd;
+            if (!IsAllTaskCompleted()) {
+                ActionWithDelay peekNextAction = actionQueue.First.Value;
+
+                if (peekNextAction.delay == 0) {
+                    m_isExecuting = false;
+                } else {
+                    StartCoroutine(WaitAndStartNextAction(peekNextAction.delay));
+                }
+            } else {
+                m_isExecuting = false;
+            }
         }
     }
 
@@ -70,25 +83,36 @@ public class ActionChain : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitAndStartNextAction() {
-        yield return new WaitForSeconds(waitTimeIntervalBetweenActions);
+    private IEnumerator WaitAndStartNextAction(float waitingTime) {
+        yield return new WaitForSeconds(waitingTime);
         m_isExecuting = false;
     }
 
     private void Awake() {
-        actionQueue = new LinkedList<Action>();
+        actionQueue = new LinkedList<ActionWithDelay>();
     }
 
     public void Update() {
         if (m_isStarted && !m_isExecuting) {
             if (IsAllTaskCompleted()) {
+                m_isStarted = false;
                 if (notifyActionChainEnd != null) {
                     notifyActionChainEnd();
                 }
-                //Destroy(this);
+               
             } else {
                 ExecuteNextAction();
             }
+        }
+    }
+
+    class ActionWithDelay {
+        public Action action;
+        public float delay;
+
+        public ActionWithDelay(Action action, float delay) {
+            this.action = action;
+            this.delay = delay;
         }
     }
 }

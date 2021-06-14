@@ -6,8 +6,10 @@ using UnityEngine;
 
 [System.Serializable]
 public abstract class Skill : MonoBehaviour {
+    [HideInInspector]
     public int sequenceId;
     public SkillData skillData;
+    
     public string skillName {
         get { return skillData.Name; }
     }
@@ -25,12 +27,27 @@ public abstract class Skill : MonoBehaviour {
     }
    
     public bool hasEffectController;
+    public bool hasTargetController;
     //public bool hasCollisionController;
-    public bool isTargetAllies = false;
+    //public bool isTargetAllies = false;
     public GameObject targetObj;
     public List<GameObject> targetObjs;
-    protected Creature target;
-    protected List<Creature> targets;
+    protected Creature target {
+        get {
+            if (targetObj != null) {
+                return targetObj.GetComponent<Creature>();
+            }
+            return null;
+        }
+    }
+    protected List<Creature> targets {
+        get {
+            if (targetObjs != null) {
+                return targetObjs.Select(obj => obj.GetComponent<Creature>()).ToList();
+            }
+            return null;
+        }
+    }
 
 
     [HideInInspector]
@@ -54,8 +71,8 @@ public abstract class Skill : MonoBehaviour {
 
     public List<EffectChain> effectChains;
     //public List<EffectCollider> colliderChains;
-    //public List<SkillAttachedBuff> triggeredBuffDefs;
-    //public List<SkillAttachedBuff> onApplyBuffDefs;
+    public List<SkillAttachedBuff> triggeredBuffDefs;
+    public List<SkillAttachedBuff> onApplyBuffDefs;
 
     public BaseEffect OnCastEffect; // position caster
     //public BaseEffect OnTriggerEffect;
@@ -77,36 +94,15 @@ public abstract class Skill : MonoBehaviour {
     //public abstract void UpdateCollider();
     protected abstract IEnumerator SkillProgress();
     public abstract void UpdateEffect();
+    // TODO control targets by skill
+    //public abstract List<GameObject> SearchSkillTarget();
 
     public virtual float CalculateValue(int phase = 0) {
         SkillFactor factor = factors[phase];
         float attack = owner.GetAttrVal(AttrType.Attack);
         return factor.baseValue + (attack * factor.factor);
     }
-
-    protected virtual void LoadTargetCreature() {
-        if (targetObj != null) {
-            target = targetObj.GetComponent<Creature>();        
-        }
-        if (targetObjs != null) {
-            targets = targetObjs.Select(obj => obj.GetComponent<Creature>()).ToList();
-        }
-        
-    }
-    //public virtual void ApplyBuffsToRole(List<SkillAttachedBuff> buffDefs, Role role) {
-    //    foreach (SkillAttachedBuff buffDef in buffDefs) {
-    //        GameObject buffObj = Instantiate(buffDef.buffObj);
-    //        if (buffDef.overrideExisting) {
-    //            BaseBuff baseBuff = buffObj.GetComponent<BaseBuff>();
-    //            baseBuff.duration = buffDef.duration;
-    //            baseBuff.frequency = buffDef.frequency;
-    //            baseBuff.value = buffDef.value;
-    //            baseBuff.factor = buffDef.factor;
-    //        }
-    //        role.AddBuff(buffObj, owner.GetComponent<Role>());
-    //    }
-    //}
-
+   
     public void ReduceCD(int round = 1) {
         if (CDLeft > 0) {
             CDLeft -= round;
@@ -164,6 +160,21 @@ public abstract class Skill : MonoBehaviour {
     //        }
     //    }
     //}
+
+    //public virtual void ApplyBuffsToRole(List<SkillAttachedBuff> buffDefs, Role role) {
+    //    foreach (SkillAttachedBuff buffDef in buffDefs) {
+    //        GameObject buffObj = Instantiate(buffDef.buffObj);
+    //        if (buffDef.overrideExisting) {
+    //            BaseBuff baseBuff = buffObj.GetComponent<BaseBuff>();
+    //            baseBuff.duration = buffDef.duration;
+    //            baseBuff.frequency = buffDef.frequency;
+    //            baseBuff.value = buffDef.value;
+    //            baseBuff.factor = buffDef.factor;
+    //        }
+    //        role.AddBuff(buffObj, owner.GetComponent<Role>());
+    //    }
+    //}
+
 
     private void OnSkillReady() {
         if (notifySkillReady != null) {

@@ -1,25 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EnemyParty : Party
 {
     public Boss boss;
-    public Creeps[] creeps;
+    public List<Creeps> creeps;
 
     private int m_creeps_cursor = 0;
     private Creeps m_current_creeps;
 
     public override void StartRound() {
-        //Debug.Log("enemy party start");
-
+        Debug.Log("enemy party start");
+        actionChain.AddAction(new IdleAction(actionChain, 0), 0);
         OnRoundStart();
         // boss action
         BossAction();
     }
 
     public override void OnActionChainEnd() {
-        
     }
 
     protected void BossAction() {
@@ -40,15 +40,20 @@ public class EnemyParty : Party
     }
 
     private void NextCreeps() {
-        if (creeps != null && creeps.Length > m_creeps_cursor) {
+        if (creeps != null && creeps.Count > m_creeps_cursor) {
             m_current_creeps = creeps[m_creeps_cursor++];
         }
         m_current_creeps = null;
     }
 
     void OnBossActionEnd() {
+        Debug.Log("OnBossActionEnd");
         actionChain.notifyActionChainEnd -= OnBossActionEnd;
-        CreepsAction();
+        if (creeps.Count > 0) {
+            CreepsAction();
+        } else {
+            OnRoundEnd();
+        }
     }
 
     void OnCreepActionEnd() {
@@ -68,8 +73,6 @@ public class EnemyParty : Party
     protected override void Awake() {
         base.Awake();
         boss = GetComponentInChildren<Boss>();
-        creeps = GetComponentsInChildren<Creeps>();
+        creeps = GetComponentsInChildren<Creeps>().ToList();
     }
-
-   
 }

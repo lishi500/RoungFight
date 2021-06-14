@@ -17,8 +17,9 @@ public class Cat : Creature
 
     public void CastCatPrimarySkill() {
         //Debug.Log("CastCatPrimarySkill");
+        //BaseAction();
         ClearEnergy();
-        CastSkillAction castSkillAction = new CastSkillAction(gameObject, enemyParty.boss.gameObject);
+        CastSkillAction castSkillAction = new CastSkillAction(gameObject);
         castSkillAction.skill = primarySkill;
         playerParty.actionChain.AddAction(castSkillAction);
     }
@@ -45,7 +46,6 @@ public class Cat : Creature
     private void ClearEnergy() {
         Energy.value = 0;
     }
-
 
     private void OnMouseUpAsButton() {}
     public override void OnDie() { } // cat never die

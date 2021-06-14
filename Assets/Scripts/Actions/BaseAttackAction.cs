@@ -10,11 +10,13 @@ public class BaseAttackAction : Action
     public BaseAttackAction(GameObject self, List<GameObject> targets) : base(self, targets) {}
 
     public override void StartAction() {
+        Debug.Log("Base Action start animation");
         AttackAnimation();
     }
 
     public void BaseAttack(Creature from, Creature to) {
         DamageDef damageDef = DamageHelper.Instance.CalculateDamage(from.GetAttrVal(AttrType.Attack), from, to, DamageType.NORMAL);
+        Debug.Log("Base Action Attack with damage: " + damageDef.damage); ;
         to.ReduceHealth(damageDef);
     }
 
@@ -24,14 +26,17 @@ public class BaseAttackAction : Action
 
         if (animationController != null) {
             SimpleEventHelper simpleEventHelper = animationController.eventHelper;
-            animationController.SetBoolState(AnimationState.ATTACK);
+            animationController.SetBoolState(AnimationState.ATTACK, true, true);
             simpleEventHelper.notifyAnimationEventTrigger += OnAttackTrigger;
             simpleEventHelper.notifyAnimationEnd += OnAnimationEnd;
         }
     }
 
     private void OnAttackTrigger(string name) {
+        Debug.Log("Base Action Receive attack trigger");
+
         if (name == "Attack") {
+            animationController.eventHelper.notifyAnimationEventTrigger -= OnAttackTrigger;
             foreach (Creature to in toS) {
                 BaseAttack(from, to);
             }
@@ -39,6 +44,7 @@ public class BaseAttackAction : Action
     }
 
     private void OnAnimationEnd() {
+        animationController.eventHelper.notifyAnimationEnd -= OnAnimationEnd;
         animationController.SetAllFalse();
         ActionEnd();
     }

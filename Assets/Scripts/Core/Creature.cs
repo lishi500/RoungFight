@@ -85,6 +85,22 @@ public abstract class Creature : MonoBehaviour {
         }
     }
 
+    public void Heal(DamageDef damageDef) {
+        if (isAlive && damageDef.type == DamageType.HEAL) {
+            health.AddValue(damageDef.damage);
+            // event on heal
+            DamageTextPool.Instance.PopDamage(this.gameObject, damageDef);
+        }
+    }
+
+    public void AddShield(DamageDef damageDef) {
+        if (isAlive && damageDef.type == DamageType.SHIELD) {
+            // TODO think about cap, and recast
+            shield.AddValue(damageDef.damage);
+            // event on heal
+            DamageTextPool.Instance.PopDamage(this.gameObject, damageDef);
+        }
+    }
     protected virtual void ShowGetHitAnimation() {
         animationController.SetBoolState(AnimationState.GET_HIT);
         animationController.eventHelper.notifyAnimationEnd += OnHitAnimationEnd;

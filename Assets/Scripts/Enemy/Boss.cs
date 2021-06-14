@@ -12,17 +12,4 @@ public class Boss : EnemyBase
         Action baseAttack = new BaseAttackAction(transform.gameObject, playerParty.player.gameObject);
         enemyParty.actionChain.AddAction(baseAttack);
     }
-   
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-  
 }

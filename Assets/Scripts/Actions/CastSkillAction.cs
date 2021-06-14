@@ -5,7 +5,7 @@ using UnityEngine;
 public class CastSkillAction : Action
 {
     public Skill skill;
-
+    public CastSkillAction(GameObject self) : base(self) { }
     public CastSkillAction(GameObject self, GameObject target) : base(self, target) { }
     public CastSkillAction(GameObject self, List<GameObject> targets) : base(self, targets) { }
 
@@ -22,6 +22,15 @@ public class CastSkillAction : Action
 
         skillClone.ownerObj = self;
         skillClone.sequenceId = GameManager.Instance.skillSeq;
+
+        if (targets == null || targets.Count == 0) {
+            if (skill.hasTargetController) {
+                // TODO skill get target
+            } else {
+               targets = TargetHelper.Instance.SearchTargets(from.gameObject, skill.skillData.targetType);
+            }
+        }
+       
 
         if (skillClone.skillData.IsMultiTarget) {
             skillClone.targetObjs = targets;

@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: DoubleStrike
   type: 0
   skillBehaviorTypes: 00000000
+  targetType: 9
   factors:
   - baseValue: 10
     factor: 1.2
@@ -25,7 +26,6 @@ MonoBehaviour:
     damageType: 1
   Icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
   Description: Strike two times
-  liveDuration: 0.4
   Cooldown: 0
   CanDuplicate: 1
   IsMultiTarget: 0

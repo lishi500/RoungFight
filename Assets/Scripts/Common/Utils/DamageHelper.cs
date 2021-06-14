@@ -22,7 +22,7 @@ public class DamageHelper : Singleton<DamageHelper>
         return CalculateDamage(baseDamage, criticalChange, damageType, targetArmorDefence);
     }
 
-    public DamageDef CalculateDamage(float baseDamage, float criticalChance, DamageType damageType, float armorDefence) {
+    public DamageDef CalculateDamage(float baseDamage, float criticalChance, DamageType damageType, float armorDefence = 1f) {
         float damage = baseDamage * armorDefence;
         DamageDef damageDef = new DamageDef(damage, false, damageType);
 

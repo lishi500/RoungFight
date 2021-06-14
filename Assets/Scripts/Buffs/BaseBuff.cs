@@ -10,15 +10,17 @@ public abstract class BaseBuff : MonoBehaviour
     //public float frequency; // gap
     public BuffType type;
     public List<ReactEventType> reactTypes;
+    [HideInInspector]
     public TargetType targetType;
 
-    [HideInInspector]
+    //[HideInInspector]
     public Creature caster;
     [HideInInspector]
     public Creature holder;
 
     public float value;
     public float factor;
+    public DamageType damageType;
 
     public int maxTriggerTimes;
     public bool isDeBuff;
@@ -49,18 +51,31 @@ public abstract class BaseBuff : MonoBehaviour
     public abstract void OnBuffRemove();
     public abstract bool CanApplyTo(Creature creature);
 
-    public virtual List<Creature> SelectTargets() {
-        return new List<Creature>();
+    //public virtual List<Creature> SelectTargets() {
+    //    return new List<Creature>();
+    //}
+    public void TriggerBuff() {
+        if (tirggeredCount < maxTriggerTimes) {
+            ShowEffect(OnTriggerEffect);
+            OnBuffTrigger();
+            tirggeredCount++;
+        }
     }
+
     protected virtual void OnRoundStart() {
-        OnBuffTrigger();
+        if (tirggeredCount < maxTriggerTimes) {
+            TriggerBuffAction triggerBuffAction = new TriggerBuffAction();
+            triggerBuffAction.baseBuff = this;
+            holder.party.actionChain.AddAction(triggerBuffAction, 0.4f);
+        }
         roundPasted += 1;
     }
     protected virtual void OnRoundEnd() {
         if (roundPasted >= duration) {
-            Destroy(gameObject);
+            DestroyBuff();
         }
     }
+    
     public virtual void OnAttack(string state) {
         Debug.Log("OnAttack BaseBuff");
     }
@@ -134,7 +149,7 @@ public abstract class BaseBuff : MonoBehaviour
     {
         GameObject effectObj = null;
 
-        if (baseEffect.effect != null) {
+        if (baseEffect != null && baseEffect.effect != null) {
             if (positionOnly)
             {
                 effectObj = GameObject.Instantiate(baseEffect.effect, transform.position, Quaternion.identity);
@@ -190,13 +205,15 @@ public abstract class BaseBuff : MonoBehaviour
         return holder.GetType() == typeof(Player);
     }
 
-    public void OnDestroy()
-    {
+    public void DestroyBuff() {
+        OnBuffRemove();
+
         if (notifyBuffRemoved != null) {
             notifyBuffRemoved(gameObject);
         }
         holder.party.notifyPartyRoundStart -= OnRoundStart;
         holder.party.notifyPartyRoundEnd -= OnRoundEnd;
-        OnBuffRemove();
+
+        Destroy(gameObject);
     }
 }

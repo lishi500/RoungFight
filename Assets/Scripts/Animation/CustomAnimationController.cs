@@ -15,6 +15,8 @@ public abstract class CustomAnimationController : MonoBehaviour
     private List<ExceptionState> exceptionList;
     private Queue<ExceptionState> exceptionOnceQueue;
 
+    private bool m_isBlocking;
+
     [HideInInspector]
     protected string[] animationStates = new string[]
     { "isWalking", "isRunning", "isEating", "isDead"};
@@ -37,28 +39,38 @@ public abstract class CustomAnimationController : MonoBehaviour
         SetBoolState("");
     }
 
-    public void SetBoolState(AnimationState state, bool flag = true)
+    public void SetBoolState(AnimationState state, bool flag = true, bool isBlocking = false)
     {
-        SetBoolState(GetStateMapping(state), flag);
+        SetBoolState(GetStateMapping(state), flag, isBlocking);
     }
 
-    public void SetBoolState(string stateName, bool flag = true)
+    public void SetBoolState(string stateName, bool flag = true, bool isBlocking = false)
     {
-        //Debug.Log("- SetBoolState -" + stateName);
-        foreach (AnimatorControllerParameter param in animator.parameters)
-        {
-            if (param.type == AnimatorControllerParameterType.Bool)
-            {
-                if (param.name == stateName)
-                {
-                    animator.SetBool(param.name, flag);
-                }
-                else
-                {
-                    animator.SetBool(param.name, false);
+        if (!m_isBlocking) {
+            if (isBlocking) { 
+            
+            }
+            //Debug.Log("- SetBoolState -" + stateName);
+            foreach (AnimatorControllerParameter param in animator.parameters) {
+                if (param.type == AnimatorControllerParameterType.Bool) {
+                    if (param.name == stateName) {
+                        animator.SetBool(param.name, flag);
+                    } else {
+                        animator.SetBool(param.name, false);
+                    }
                 }
             }
         }
+        
+    }
+
+    private void BlockAllState() {
+        m_isBlocking = true;
+        eventHelper.notifyAnimationEnd += UnblockAllState;
+    }
+
+    private void UnblockAllState() {
+        m_isBlocking = false;
     }
 
     private void UpdateExceptionState()

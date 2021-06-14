@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &929672321773923350
+--- !u!1 &8719216809322269220
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 929672321773923348}
-  - component: {fileID: 929672321773923349}
+  - component: {fileID: 8719216809322269222}
+  - component: {fileID: 8719216809322269221}
   m_Layer: 0
-  m_Name: AttackUpBuff
+  m_Name: DotDebuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &929672321773923348
+--- !u!4 &8719216809322269222
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 929672321773923350}
+  m_GameObject: {fileID: 8719216809322269220}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,41 +31,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &929672321773923349
+--- !u!114 &8719216809322269221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 929672321773923350}
+  m_GameObject: {fileID: 8719216809322269220}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be3df3db470088a46a3dfb26405780be, type: 3}
+  m_Script: {fileID: 11500000, guid: 8934a860916e3564fa7199b3d52d746c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffName: Attack Up Buff
-  duration: 3
-  type: 4
+  buffName: DotDebuff
+  duration: 4
+  type: 1
   reactTypes: 
   targetType: 0
   caster: {fileID: 0}
   holder: {fileID: 0}
-  value: 20
-  factor: 0
-  maxTriggerTimes: 0
-  isDeBuff: 0
+  value: 15
+  factor: 0.5
+  damageType: 1
+  maxTriggerTimes: 4
+  isDeBuff: 1
   isForever: 0
   canDuplicate: 0
   attachedSkillName: 
   prioirty: 10
   OnApplyEffect:
-    effect: {fileID: 6687220412962576281, guid: ec7cd93ddb4294b4db94a4c9aed38ce1, type: 3}
+    effect: {fileID: 121962, guid: 8b859f6ed5d97694fb9e41bab73b55ff, type: 3}
     duration: 1
-    delay: 0.1
+    delay: 0
   OnTriggerEffect:
-    effect: {fileID: 0}
+    effect: {fileID: 153674, guid: 98e35bc5094f25441a4c3b405abf1870, type: 3}
     duration: 1
-    delay: 0.1
+    delay: 0
   LivingEffect:
     effect: {fileID: 0}
     duration: 1
@@ -73,5 +74,3 @@ MonoBehaviour:
   OtherEffects: []
   roundPasted: 0
   tirggeredCount: 0
-  attriType: 2
-  attriValueType: 1

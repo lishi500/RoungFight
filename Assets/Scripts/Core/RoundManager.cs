@@ -12,6 +12,11 @@ public class RoundManager : Singleton<RoundManager> {
     private RoundPartySchedule m_roundParty;
 
     public void MoveToNextRountParty() {
+        StartCoroutine(StartRound());
+    }
+
+    private IEnumerator StartRound() {
+        yield return new WaitForSeconds(1f);
         PartyType partyType = PartySchedule.GetNextParty();
         //Debug.Log("Move party To >> " + partyType);
 
@@ -24,6 +29,8 @@ public class RoundManager : Singleton<RoundManager> {
                 break;
         }
         currentParty.StartRound();
+        yield return null;
+
     }
 
     protected override void Awake() {

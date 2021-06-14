@@ -10,6 +10,8 @@ public abstract class Party : MonoBehaviour {
     public event PartRoundEndEvent notifyPartyRoundEnd;
     public ActionChain actionChain;
 
+    public GameObject roundState;
+
     protected BoardManager boardManager {
         get { return BoardManager.Instance; }
     }
@@ -24,7 +26,7 @@ public abstract class Party : MonoBehaviour {
 
     public void StartActionChain() {
         if (!actionChain.isStarted && !actionChain.isExecuting) {
-            actionChain.Start();
+            actionChain.StartActionChain();
         }
     }
 
@@ -32,16 +34,19 @@ public abstract class Party : MonoBehaviour {
         if (notifyPartyRoundStart != null) {
             notifyPartyRoundStart();
         }
+        roundState.SetActive(true);
     }
 
     protected void OnRoundEnd() {
         if (notifyPartyRoundEnd != null) {
             notifyPartyRoundEnd();
         }
+        roundState.SetActive(false);
         roundManager.MoveToNextRountParty();
     }
 
     protected void OnActionAdd(Action action) {
+        Debug.Log("Add action " + action.GetType().ToString());
         StartActionChain();
     }
 

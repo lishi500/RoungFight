@@ -28,6 +28,13 @@ public abstract class Action
     public Action() {
         this.targets = new List<GameObject>();
     }
+
+    public Action(GameObject self, Attribute actionAttr = null) {
+        this.self = self;
+        this.targets = new List<GameObject>();
+        this.actionAttr = actionAttr;
+    }
+
     public Action(GameObject self, GameObject target, Attribute actionAttr = null) {
         this.self = self;
         this.targets = new List<GameObject>();

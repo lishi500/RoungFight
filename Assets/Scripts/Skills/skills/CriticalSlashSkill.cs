@@ -26,7 +26,6 @@ public class CriticalSlashSkill : Skill
     }
 
     public override void SkillSetup() {
-        LoadTargetCreature();
     }
 
     public override void UpdateEffect() {

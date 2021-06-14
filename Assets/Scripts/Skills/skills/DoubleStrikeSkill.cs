@@ -19,6 +19,8 @@ public class DoubleStrikeSkill : Skill
         DamageDef damageDef1 = QuickDamage(target, 1);
         Debug.Log(name + ":" + sequenceId + " Phase: 1" + "Damage: " + damageDef1.damage + " : " + Time.time);
 
+        skillController.ApplyBuffToCreature(target, triggeredBuffDefs[0].buffObj.GetComponent<BaseBuff>());
+
         skillController.OnSkillFinish();
     }
 
@@ -27,7 +29,6 @@ public class DoubleStrikeSkill : Skill
     public override void OnSkillAd() { }
 
     public override void SkillSetup() {
-        LoadTargetCreature();
     }
 
 }

@@ -9,6 +9,7 @@ public class SkillData : ScriptableObject {
     public string Name;
     public SkillType type = SkillType.ACTIVE;
     public List<SkillBehaviorType> skillBehaviorTypes;
+    public TargetType targetType;
     public List<SkillFactor> factors;
     public Sprite Icon;
     public string Description;
