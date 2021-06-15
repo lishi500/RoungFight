@@ -5,23 +5,26 @@ using UnityEngine;
 public class ShieldSkill : Skill
 {
     public override void OnSkillAd() {
-        throw new System.NotImplementedException();
     }
 
     public override void OnSkillCast() {
-        throw new System.NotImplementedException();
+        StartCoroutine(SkillProgress());
     }
 
     public override void SkillSetup() {
-        throw new System.NotImplementedException();
     }
 
     public override void UpdateEffect() {
-        throw new System.NotImplementedException();
     }
 
     protected override IEnumerator SkillProgress() {
-        throw new System.NotImplementedException();
+        yield return new WaitForSeconds(0.5f);
+
+        float shieldAmount = CalculateValue();
+        DamageDef shieldDef = new DamageDef(shieldAmount, skillData.CanDuplicate, DamageType.SHIELD);
+        target.AddShield(shieldDef, 5, true, this.GetType());
+
+        skillController.OnSkillFinish();
     }
 
 }

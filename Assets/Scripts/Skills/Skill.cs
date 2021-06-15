@@ -26,11 +26,10 @@ public abstract class Skill : MonoBehaviour {
         get { return skillData.factors; }
     }
    
-    public bool hasEffectController;
     public bool hasTargetController;
-    //public bool hasCollisionController;
-    //public bool isTargetAllies = false;
+    [HideInInspector]
     public GameObject targetObj;
+    [HideInInspector]
     public List<GameObject> targetObjs;
     protected Creature target {
         get {
@@ -69,6 +68,7 @@ public abstract class Skill : MonoBehaviour {
         get { return isReady; }
     }
 
+    public bool hasEffectController;
     public List<EffectChain> effectChains;
     //public List<EffectCollider> colliderChains;
     public List<SkillAttachedBuff> triggeredBuffDefs;

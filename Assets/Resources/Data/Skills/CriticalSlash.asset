@@ -18,7 +18,7 @@ MonoBehaviour:
   skillBehaviorTypes: 
   targetType: 3
   factors:
-  - baseValue: 50
+  - baseValue: 20
     factor: 1.5
     damageType: 1
   Icon: {fileID: 0}

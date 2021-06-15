@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class Creature : MonoBehaviour {
     public List<Attribute> attributes;
@@ -11,6 +12,8 @@ public abstract class Creature : MonoBehaviour {
     public List<BaseBuff> buffs;
     public Creature target;
     public CustomAnimationController animationController;
+    public Shield shield;
+
     public Party party {
         get { return GetComponentInParent<Party>(); }
     }
@@ -29,10 +32,6 @@ public abstract class Creature : MonoBehaviour {
     public Attribute health {
         get { return GetAttr(AttrType.Health); }
     }
-    public Attribute shield {
-        get { return GetAttr(AttrType.Shield); }
-    }
-
     public abstract void OnDie();
 
     public Attribute GetAttr(AttrType type) {
@@ -60,19 +59,13 @@ public abstract class Creature : MonoBehaviour {
     }
 
     public void ReduceHealth(DamageDef damageDef) {
-        float amount = damageDef.damage;
-        bool isCritical = damageDef.isCritical;
-        DamageType type = damageDef.type;
-
         if (isAlive && health != null) {
-            if (GetAttrVal(shield) > 0) {
-                float amountLeft = Mathf.Max(amount - GetAttrVal(shield), 0);
-                shield.SubValue(amount);
-                amount = amountLeft;
+            if (shield.amount > 0) {
+                shield.ReduceShield(damageDef);
             }
 
-            health.SubValue(amount);
-            if (amount > 0) {
+            health.SubValue(damageDef.damage);
+            if (damageDef.damage > 0) {
                 ShowGetHitAnimation();
             }
             DamageTextPool.Instance.PopDamage(this.gameObject, damageDef);
@@ -93,12 +86,11 @@ public abstract class Creature : MonoBehaviour {
         }
     }
 
-    public void AddShield(DamageDef damageDef) {
-        if (isAlive && damageDef.type == DamageType.SHIELD) {
-            // TODO think about cap, and recast
-            shield.AddValue(damageDef.damage);
+    public void AddShield(DamageDef shieldDef, int roundToLive, bool canStack, Type classType) {
+        if (isAlive && shieldDef.type == DamageType.SHIELD) {
+            shield.AddShield(shieldDef.damage, roundToLive, canStack, classType);
             // event on heal
-            DamageTextPool.Instance.PopDamage(this.gameObject, damageDef);
+            DamageTextPool.Instance.PopDamage(this.gameObject, shieldDef);
         }
     }
     protected virtual void ShowGetHitAnimation() {
@@ -113,6 +105,7 @@ public abstract class Creature : MonoBehaviour {
 
     protected virtual void Awake() {
         animationController = GetComponentInChildren<CustomAnimationController>();
+        shield = new Shield(this);
     }
 
 }
