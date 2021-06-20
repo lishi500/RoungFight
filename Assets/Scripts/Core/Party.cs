@@ -23,6 +23,7 @@ public abstract class Party : MonoBehaviour {
     //public abstract void CanStartRound();
     public abstract void StartRound();
     public abstract void OnActionChainEnd();
+    public abstract List<Creature> GetAllCreatures();
 
     public void StartActionChain() {
         if (!actionChain.isStarted && !actionChain.isExecuting) {

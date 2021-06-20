@@ -2,19 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerBuffAction : Action
+public class DamageActoin : Action
 {
-    public BaseBuff baseBuff;
-
     public override List<ActionType> DefaultActionType() {
-        return new List<ActionType>() { ActionType.TriggerBuff };
+        return new List<ActionType>() { ActionType.Damage };
+
     }
 
     protected override void OnPrepareAction() {
     }
 
     protected override void OnStartAction() {
-        baseBuff.TriggerBuff();
-        ActionEnd();
     }
+
+   
 }

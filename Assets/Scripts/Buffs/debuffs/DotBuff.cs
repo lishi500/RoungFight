@@ -27,6 +27,10 @@ public class DotBuff : BaseBuff
         StartCoroutine(TriggerWithDeplay());
     }
 
+    public override void OnReactionTrigger(Action action) {
+        throw new System.NotImplementedException();
+    }
+
     private IEnumerator TriggerWithDeplay() {
         yield return new WaitForSeconds(0.2f);
         DamageDef damageDef = DamageHelper.Instance.CalculateDamage(damageSnapshot, caster, holder, damageType);

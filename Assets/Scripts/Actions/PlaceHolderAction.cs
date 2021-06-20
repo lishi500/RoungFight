@@ -8,7 +8,14 @@ using UnityEngine;
  */
 public class PlaceHolderAction : Action
 {
-    public override void StartAction() {
+    public override List<ActionType> DefaultActionType() {
+        return new List<ActionType>();
+    }
+
+    protected override void OnPrepareAction() {
+    }
+
+    protected override void OnStartAction() {
         ActionEnd();
     }
 }

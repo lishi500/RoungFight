@@ -23,6 +23,7 @@ public abstract class BaseBuff : MonoBehaviour
     public DamageType damageType;
 
     public int maxTriggerTimes;
+    public int maxReactTimes;
     public bool isDeBuff;
     public bool isForever;
     public bool canDuplicate;
@@ -39,6 +40,8 @@ public abstract class BaseBuff : MonoBehaviour
     [HideInInspector]
     public int tirggeredCount;
     [HideInInspector]
+    public int reactCount;
+    [HideInInspector]
     SimpleEventHelper eventHelper;
     [HideInInspector]
     public delegate void OnBuffRemoveDelegate(GameObject self);
@@ -49,8 +52,8 @@ public abstract class BaseBuff : MonoBehaviour
     public abstract void OnBuffTrigger();
     public abstract void OnBuffApply();
     public abstract void OnBuffRemove();
-    public abstract bool CanApplyTo(Creature creature);
-
+    public abstract bool CanApplyTo(Creature creature); 
+    public abstract void OnReactionTrigger(Action action);
     //public virtual List<Creature> SelectTargets() {
     //    return new List<Creature>();
     //}
@@ -59,6 +62,13 @@ public abstract class BaseBuff : MonoBehaviour
             ShowEffect(OnTriggerEffect);
             OnBuffTrigger();
             tirggeredCount++;
+        }
+    }
+
+    public void TriggerReact(Action action) {
+        if (reactCount < maxReactTimes) {
+            OnReactionTrigger(action);
+            reactCount++;
         }
     }
 
@@ -111,40 +121,7 @@ public abstract class BaseBuff : MonoBehaviour
         roundPasted = 0;
         tirggeredCount = 0;
     }
-    // Start is called before the first frame update
-    void RegisterEventListener() {
-        if (eventHelper != null)
-        {
-            foreach (ReactEventType reactEventType in reactTypes)
-            {
-                switch (reactEventType)
-                {
-                    case ReactEventType.SELF_ATTACK:
-                        //eventHelper.notifyRangeAttack += OnAttack;
-                        //eventHelper.notifyMeleeAttack += OnAttack;
-                        break;
-                    case ReactEventType.SELF_CAST_SKILL:
-                        //eventHelper.notifyCastSpell += OnCastSkill;
-                        break;
-
-                    case ReactEventType.SELF_GET_HIT:
-                        //eventHelper.notifyGetHit += OnGetHit;
-                        break;
-
-                    //case ReactEventType.SKILL_READY:
-                    //    eventHelper.notifySkillReady += OnSkillReady;
-                    //    break;
-
-                    case ReactEventType.DIE:
-                        //    eventHelper.notifyDied += OnDie;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        } 
-    }
-
+   
     public void ShowEffect(BaseEffect baseEffect, bool positionOnly = false)
     {
         GameObject effectObj = null;
@@ -189,8 +166,6 @@ public abstract class BaseBuff : MonoBehaviour
             holder.party.notifyPartyRoundStart += OnRoundStart;
             holder.party.notifyPartyRoundEnd += OnRoundEnd;
         }
-
-        RegisterEventListener();
 
         OnBuffApply();
         ShowEffect(OnApplyEffect);

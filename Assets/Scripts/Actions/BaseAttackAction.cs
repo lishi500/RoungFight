@@ -9,7 +9,7 @@ public class BaseAttackAction : Action
     public BaseAttackAction(GameObject self, GameObject target) : base(self, target) {}
     public BaseAttackAction(GameObject self, List<GameObject> targets) : base(self, targets) {}
 
-    public override void StartAction() {
+    protected override void OnStartAction() {
         Debug.Log("Base Action start animation");
         AttackAnimation();
     }
@@ -49,4 +49,10 @@ public class BaseAttackAction : Action
         ActionEnd();
     }
 
+    public override List<ActionType> DefaultActionType() {
+        return new List<ActionType>() { ActionType.BaseAttack };
+    }
+
+    protected override void OnPrepareAction() {
+    }
 }

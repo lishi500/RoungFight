@@ -75,4 +75,17 @@ public class EnemyParty : Party
         boss = GetComponentInChildren<Boss>();
         creeps = GetComponentsInChildren<Creeps>().ToList();
     }
+
+    public override List<Creature> GetAllCreatures() {
+        List<Creature> enemyCreatures = new List<Creature>();
+
+        if (boss != null) { 
+            enemyCreatures.Add(boss);
+        }
+
+        if (creeps != null && creeps.Count > 0) { 
+            enemyCreatures.AddRange(creeps.Cast<Creature>().ToList());
+        }
+        return enemyCreatures;
+    }
 }

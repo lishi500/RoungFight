@@ -85,4 +85,7 @@ public class AttributeBuff : BaseBuff
     {
     }
 
+    public override void OnReactionTrigger(Action action) {
+        throw new System.NotImplementedException();
+    }
 }

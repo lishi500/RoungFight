@@ -6,7 +6,24 @@ public enum ActionType
 {
    None,
    BaseAttack,
-   Skill,
+   CastSkill,
+   Charge,
+
+   ApplyBuff,
    Buff,
+   Debuff,
+   TriggerBuff,
+
+   Heal,
+   Shield,
+   Die,
+   Thorns,
+   Control,
+   Summon,
+   Damage,
+   Critical,
+   Physical,
+   Magical,
+
    //Board
 }

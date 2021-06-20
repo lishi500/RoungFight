@@ -5,34 +5,60 @@ using UnityEngine;
 
 public abstract class Action
 {
-    protected GameObject self;
-    protected List<GameObject> targets;
+    public GameObject self;
+    public List<GameObject> targets;
     protected Attribute actionAttr;
-    protected Creature from {
+    public Creature from {
         get { return self.GetComponent<Creature>(); }
     }
-    protected Creature to {
+    public Creature to {
         get { return targets[0].GetComponent<Creature>(); }
     }
-    protected List<Creature> toS {
+    public List<Creature> toS {
         get { return targets.Select(tar => tar.GetComponent<Creature>()).ToList(); }
     }
 
-    public ActionType type;
+    public List<ActionType> types;
+    private bool isPrepared;
 
+    public delegate void ActionReadyEvent(Action action);
+    public event ActionReadyEvent notifyActionReady;
     public delegate void ActionEndEvent(Action action);
     public event ActionEndEvent notifyActionEnd;
 
-    public abstract void StartAction();
+    protected abstract void OnPrepareAction();
+    protected abstract void OnStartAction();
+
+    public void PrepareAction() {
+        isPrepared = true;
+        OnPrepareAction();
+        if (notifyActionReady != null) {
+            notifyActionReady(this);
+        }
+    }
+    public void StartAction() {
+        if (!isPrepared) {
+            PrepareAction();
+        }
+
+        OnStartAction();
+    }
+
+    public abstract List<ActionType> DefaultActionType();
     //public abstract void Interrupt();
     public Action() {
         this.targets = new List<GameObject>();
+        this.types = new List<ActionType>();
+        types.AddRange(DefaultActionType());
     }
 
     public Action(GameObject self, Attribute actionAttr = null) {
         this.self = self;
         this.targets = new List<GameObject>();
         this.actionAttr = actionAttr;
+        this.types = new List<ActionType>();
+        types.AddRange(DefaultActionType());
+
     }
 
     public Action(GameObject self, GameObject target, Attribute actionAttr = null) {
@@ -40,11 +66,21 @@ public abstract class Action
         this.targets = new List<GameObject>();
         this.targets.Add(target);
         this.actionAttr = actionAttr;
+        this.types = new List<ActionType>();
+        types.AddRange(DefaultActionType());
+
+
     }
     public Action(GameObject self, List<GameObject> targets, Attribute actionAttr = null) {
         this.self = self;
         this.targets = targets;
         this.actionAttr = actionAttr;
+        this.types = new List<ActionType>();
+        types.AddRange(DefaultActionType());
+    }
+
+    public void AddActionType(ActionType actionType) {
+        types.Add(actionType);
     }
 
     public void ActionEnd() {

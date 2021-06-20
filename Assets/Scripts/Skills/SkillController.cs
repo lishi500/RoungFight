@@ -12,6 +12,8 @@ public class SkillController : MonoBehaviour
     public Skill skill;
 
     //protected PrafabHolder prafabHolder;
+    [HideInInspector]
+    public Action action;
 
     [HideInInspector]
     public int effectChainIndex;
@@ -42,6 +44,8 @@ public class SkillController : MonoBehaviour
         effectChainIndex = 0;
         skill.SkillSetup();
         Debug.Log(skill.sequenceId + " start skill " + skill.name);
+        ReactionController.Instance.EvaluateBuffs(creator.GetComponent<Creature>(), ActionType.CastSkill, action);
+
         skill.StartCastSkill();
         OnSkillCast();
         isStarted = true;
@@ -57,13 +61,11 @@ public class SkillController : MonoBehaviour
 
             SkillUpdate();
             UpdateEffect();
-            //if (!skill.hasEffectController)
-            //{
-            //    UpdateEffect();
-            //}
-            //else {
-            //    skill.UpdateEffect();
-            //}
+            if (skill.hasEffectController) {
+                skill.UpdateEffect();
+            } else {
+                UpdateEffect();
+            }
         }
 
     }
@@ -123,7 +125,7 @@ public class SkillController : MonoBehaviour
         float destoryTime = effectChain.duration == 0 ? 3 : effectChain.duration;
         effect.AddComponent<AutoDestroy>().timeToLive = destoryTime;
 
-        PlayParticleSystem(effect);
+        ParticleUtils.Instance.PlayParticleSystem(effect);
     }
     void ShowBaseEffect(BaseEffect baseEffect, Vector3 position) {
         if (baseEffect.effect != null) {
@@ -133,7 +135,7 @@ public class SkillController : MonoBehaviour
                 effectObj.AddComponent<AutoDestroy>().timeToLive = baseEffect.duration;
             }
 
-            PlayParticleSystem(effectObj);
+            ParticleUtils.Instance.PlayParticleSystem(effectObj);
         }
     }
     // TODO more position type
@@ -158,12 +160,6 @@ public class SkillController : MonoBehaviour
         }
 
         yield return null;
-    }
-    private void PlayParticleSystem(GameObject effect) {
-        ParticleSystem ps = effect.GetComponent<ParticleSystem>();
-        if (ps != null) {
-            ps.Play();
-        }
     }
 
     private Vector3 GetPositionWithDistanceAndAngle(Transform from, float distance, float angle) {

@@ -93,6 +93,16 @@ public abstract class Creature : MonoBehaviour {
             DamageTextPool.Instance.PopDamage(this.gameObject, shieldDef);
         }
     }
+
+    public void AddBuff(BaseBuff buff) {
+        buffs.Add(buff);
+    }
+
+    public void RemoveBuff(BaseBuff buff) {
+        if (buffs.Contains(buff)) {
+            buffs.Remove(buff);
+        }
+    }
     protected virtual void ShowGetHitAnimation() {
         animationController.SetBoolState(AnimationState.GET_HIT);
         animationController.eventHelper.notifyAnimationEnd += OnHitAnimationEnd;
@@ -106,6 +116,8 @@ public abstract class Creature : MonoBehaviour {
     protected virtual void Awake() {
         animationController = GetComponentInChildren<CustomAnimationController>();
         shield = new Shield(this);
+        buffs = new List<BaseBuff>();
+        buffs.AddRange(GetComponentsInChildren<BaseBuff>());
     }
 
 }

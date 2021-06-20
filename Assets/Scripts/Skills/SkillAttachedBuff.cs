@@ -12,11 +12,4 @@ public class SkillAttachedBuff
 
     [HideInInspector]
     public Skill skill;
-    //public bool overrideExisting; // use this buff defination to override buff prafab value
-    //public float duration;
-    //public float frequency;
-
-    //public float value;
-    //public float factor;
-
 }

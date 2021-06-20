@@ -16,5 +16,7 @@ public enum TargetType
     PLAYER_PARTY,
     ENEMIE_PARTY,
     INHERITED,
-    BOARD
+    BOARD,
+
+    NONE
 }

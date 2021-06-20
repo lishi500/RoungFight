@@ -17,6 +17,8 @@ public enum ReactEventType
     ALLIES_ENERGY_RECEIVE,
 
     ENEMY_GET_HIT,
+    ENEMY_ATTACK,
+    ENEMY_CAST_SKILL,
     // other enemy...
 
     SKILL_READY,

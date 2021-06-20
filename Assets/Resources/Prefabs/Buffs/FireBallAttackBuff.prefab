@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5268396840411786641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5268396840411786646}
+  - component: {fileID: 5268396840411786647}
+  m_Layer: 0
+  m_Name: FireBallAttackBuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5268396840411786646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5268396840411786641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5268396840411786647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5268396840411786641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c87717adf9a36154a8300b738f7bd37f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffName: Fire Attack
+  duration: 5
+  type: 3
+  reactTypes: 0000000001000000
+  targetType: 0
+  caster: {fileID: 0}
+  holder: {fileID: 0}
+  value: 0
+  factor: 0
+  damageType: 0
+  maxTriggerTimes: 0
+  maxReactTimes: 1
+  isDeBuff: 0
+  isForever: 0
+  canDuplicate: 0
+  attachedSkillName: FireBallAttackSkill
+  prioirty: 10
+  OnApplyEffect:
+    effect: {fileID: 0}
+    duration: 1
+    delay: 0.1
+  OnTriggerEffect:
+    effect: {fileID: 0}
+    duration: 1
+    delay: 0.1
+  LivingEffect:
+    effect: {fileID: 0}
+    duration: 1
+    delay: 0.1
+  OtherEffects: []
+  roundPasted: 0
+  tirggeredCount: 0
+  reactCount: 0
+  flameBallPrefab: {fileID: 4537393610888588248, guid: 6b85b35eaad6e8647a593d4ab105bcfb, type: 3}

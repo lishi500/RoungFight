@@ -48,7 +48,6 @@ public abstract class Skill : MonoBehaviour {
         }
     }
 
-
     [HideInInspector]
     public int CDLeft = 0;
     [HideInInspector]
@@ -73,6 +72,7 @@ public abstract class Skill : MonoBehaviour {
     //public List<EffectCollider> colliderChains;
     public List<SkillAttachedBuff> triggeredBuffDefs;
     public List<SkillAttachedBuff> onApplyBuffDefs;
+    public bool isBuffAttacedSkill;
 
     public BaseEffect OnCastEffect; // position caster
     //public BaseEffect OnTriggerEffect;

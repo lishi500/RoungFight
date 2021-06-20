@@ -19,11 +19,13 @@ public class ApplyBuffAction : Action
         this.skillAttachedBuff = skillAttachedBuff;
         buffPrefabObj = skillAttachedBuff.buffObj;
     }
-
-    public override void StartAction() {
+    protected override void OnPrepareAction() {
         if (buffPrefabObj == null) {
             buffPrefabObj = LoadBuffPrefab();
         }
+    }
+
+    protected override void OnStartAction() {
         SelectBuffTarget(buffPrefabObj);
 
         foreach (Creature creature in targetCreatures) {
@@ -31,6 +33,7 @@ public class ApplyBuffAction : Action
             BaseBuff buff = buffObj.GetComponent<BaseBuff>();
             buff.caster = from;
             buff.holder = creature;
+            creature.AddBuff(buff);
         }
 
         ActionEnd();
@@ -63,4 +66,10 @@ public class ApplyBuffAction : Action
 
         return null;
     }
+
+    public override List<ActionType> DefaultActionType() {
+        return new List<ActionType>() { ActionType.ApplyBuff };
+    }
+
+   
 }

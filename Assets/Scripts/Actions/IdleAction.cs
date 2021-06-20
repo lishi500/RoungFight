@@ -11,7 +11,14 @@ public class IdleAction : Action {
         this.idleTime = idleTime;
     }
 
-    public override void StartAction() {
+    public override List<ActionType> DefaultActionType() {
+        return new List<ActionType>();
+    }
+
+    protected override void OnPrepareAction() {
+    }
+
+    protected override void OnStartAction() {
         if (idleTime > 0 && actionChain != null) {
             PlaceHolderAction placeHolderAction = new PlaceHolderAction();
             actionChain.AddActionJumpQueue(placeHolderAction, idleTime);

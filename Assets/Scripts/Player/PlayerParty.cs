@@ -43,4 +43,17 @@ public class PlayerParty : Party
         player = GetComponentInChildren<Player>();
         cats = GetComponentsInChildren<Cat>().ToList();
     }
+
+    public override List<Creature> GetAllCreatures() {
+        List<Creature>playerCreatures = new List<Creature>();
+
+        if (player != null) {
+            playerCreatures.Add(player);
+        }
+
+        if (cats != null && cats.Count > 0) {
+            playerCreatures.AddRange(cats.Cast<Creature>().ToList());
+        }
+        return playerCreatures;
+    }
 }
