@@ -86,6 +86,8 @@ public abstract class Action
     public void ActionEnd() {
         if (notifyActionEnd != null) {
             notifyActionEnd(this);
+        } else {
+            Debug.Log("No one listen");
         }
         //Destroy(this);
     }

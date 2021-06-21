@@ -47,7 +47,7 @@ public abstract class Party : MonoBehaviour {
     }
 
     protected void OnActionAdd(Action action) {
-        Debug.Log("Add action " + action.GetType().ToString());
+        //Debug.Log("Add action " + action.GetType().ToString());
         StartActionChain();
     }
 

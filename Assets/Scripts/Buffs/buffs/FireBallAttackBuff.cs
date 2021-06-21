@@ -39,7 +39,6 @@ public class FireBallAttackBuff : BaseBuff
         FireBallAttackSkill fireSkill = castSkillAction.skillObj.GetComponent<Skill>() as FireBallAttackSkill;
         fireSkill.flameEffect = flameBall;
 
-        holder.party.actionChain.AddActionJumpQueue(castSkillAction, 0);
         DelayStartHandler.Instance.DelayAction(castSkillAction, 0.3f);
     }
 

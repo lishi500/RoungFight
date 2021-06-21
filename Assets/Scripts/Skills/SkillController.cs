@@ -17,20 +17,12 @@ public class SkillController : MonoBehaviour
 
     [HideInInspector]
     public int effectChainIndex;
-   
     [HideInInspector]
     public float pastTime;
-    [HideInInspector]
-    public Transform position1;
-    [HideInInspector]
-    public Transform position2;
-    [HideInInspector]
-    public Vector3 direction;
+ 
 
     [HideInInspector]
     public bool isStarted = false;
-
-
 
     public virtual void SkillOnTrail() { }
     public virtual void OnSkillCast() {
@@ -43,7 +35,7 @@ public class SkillController : MonoBehaviour
         pastTime = 0;
         effectChainIndex = 0;
         skill.SkillSetup();
-        Debug.Log(skill.sequenceId + " start skill " + skill.name);
+        Debug.Log(skill.sequenceId + " start skill " + skill.name + " : " + Time.time);
         ReactionController.Instance.EvaluateBuffs(creator.GetComponent<Creature>(), ActionType.CastSkill, action);
 
         skill.StartCastSkill();
@@ -102,7 +94,7 @@ public class SkillController : MonoBehaviour
         if (skill.effectChains != null && effectChainIndex < skill.effectChains.Count) {
             EffectChain effectChain = skill.effectChains[effectChainIndex];
             if (effectChain.delay <= pastTime) {
-                Debug.Log(skill.name + ":" + skill.sequenceId + " EffectChain: " + effectChainIndex + " : " + Time.time);
+                //Debug.Log(skill.name + ":" + skill.sequenceId + " EffectChain: " + effectChainIndex + " : " + Time.time);
                 ShowEffectChain(effectChain, GeneratePositionByType(effectChain.positionType).position);
                 effectChainIndex++;
             }
@@ -173,8 +165,23 @@ public class SkillController : MonoBehaviour
         if (notifySkillFinish != null) {
             notifySkillFinish();
         }
-        gameObject.SetActive(false);
+        Debug.Log(skill.sequenceId + " end skill " + skill.name + " : " + Time.time);
+
+        ResetToDefault();
+        SkillHolderPool.Instance.EnPool(gameObject, skill.skillName);
     }
+
+    public void ResetToDefault() {
+        isStarted = false;
+        pastTime = 0;
+        action = null;
+        effectChainIndex = 0;
+        creator = null;
+        primaryTarget = null;
+        targets = null;
+        skill.ResetCD();
+    }
+
 
     public delegate void SkillFinishDelegate();
     public event SkillFinishDelegate notifySkillFinish;

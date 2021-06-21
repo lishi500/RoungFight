@@ -67,8 +67,8 @@ public abstract class BaseBuff : MonoBehaviour
 
     public void TriggerReact(Action action) {
         if (reactCount < maxReactTimes) {
-            OnReactionTrigger(action);
             reactCount++;
+            OnReactionTrigger(action);
         }
     }
 

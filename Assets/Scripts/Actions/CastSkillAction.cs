@@ -18,10 +18,8 @@ public class CastSkillAction : Action
             ActionEnd();
             return;
         }
-        // TODO make a skill holder pool
 
-        GameObject skillPrefab = GetSkillPrefab();
-        skillObj = GameObject.Instantiate(skillPrefab);
+        GetOrInitSkillHolder();
         skillClone = skillObj.GetComponent<Skill>();
 
         skillClone.ownerObj = self;
@@ -44,8 +42,6 @@ public class CastSkillAction : Action
     }
 
     protected override void OnStartAction() {
-       
-
         SkillController skillController = skillObj.AddComponent<SkillController>();
         skillController.skill = skillClone;
         skillController.creator = self;
@@ -53,11 +49,15 @@ public class CastSkillAction : Action
         skillController.targets = targets;
         skillController.notifySkillFinish += OnSkillEnd;
         skillController.action = this;
+        Debug.Log("Listen " + skillClone.sequenceId);
 
         skillController.InitialSkill();
     }
 
     public void OnSkillEnd() {
+        Debug.Log("On Skill End " + skillClone.sequenceId);
+        SkillController skillController = skillObj.AddComponent<SkillController>();
+        skillController.notifySkillFinish -= OnSkillEnd;
         ActionEnd();
     }
 
@@ -72,5 +72,18 @@ public class CastSkillAction : Action
         return SkillHelper.Instance.GetSkillPrefab(skillName);
     }
 
-   
+    private void GetOrInitSkillHolder() {
+        if (skill != null) {
+            skillName = skill.skillName;
+        }
+        //skillObj = SkillHolderPool.Instance.DePool(skillName);
+        if (skillObj == null) {
+            GameObject skillPrefab = GetSkillPrefab();
+            skillObj = GameObject.Instantiate(skillPrefab);
+        } else {
+            skillObj.SetActive(true);
+        }
+    }
+
+
 }

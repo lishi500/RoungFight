@@ -63,8 +63,8 @@ public class FireBallAttackSkill : Skill
     protected override IEnumerator SkillProgress() {
         yield return new WaitForSeconds(0.1f);
         DamageDef damageDef1 = QuickDamage(target, 0);
-        Debug.Log(name + ":" + sequenceId + " Phase: 1" + "Damage: " + damageDef1.damage + " : " + Time.time);
-        
+        //Debug.Log(name + ":" + sequenceId + " Phase: 1" + "Damage: " + damageDef1.damage + " : " + Time.time);
+
         skillController.OnSkillFinish();
     }
 
