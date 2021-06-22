@@ -5,16 +5,17 @@ using UnityEngine;
 public class CastSkillAction : Action
 {
     public Skill skill;
-    public string skillName;
+    public string skillTypeName;
     public CastSkillAction(GameObject self) : base(self) { }
     public CastSkillAction(GameObject self, GameObject target) : base(self, target) { }
     public CastSkillAction(GameObject self, List<GameObject> targets) : base(self, targets) { }
 
     public GameObject skillObj;
     public Skill skillClone;
+    SkillController skillController;
 
     protected override void OnPrepareAction() {
-        if (skill == null && skillName == null) {
+        if (skill == null && skillTypeName == null) {
             ActionEnd();
             return;
         }
@@ -42,21 +43,18 @@ public class CastSkillAction : Action
     }
 
     protected override void OnStartAction() {
-        SkillController skillController = skillObj.AddComponent<SkillController>();
+
         skillController.skill = skillClone;
         skillController.creator = self;
         skillController.primaryTarget = targets[0];
         skillController.targets = targets;
         skillController.notifySkillFinish += OnSkillEnd;
         skillController.action = this;
-        Debug.Log("Listen " + skillClone.sequenceId);
 
         skillController.InitialSkill();
     }
 
     public void OnSkillEnd() {
-        Debug.Log("On Skill End " + skillClone.sequenceId);
-        SkillController skillController = skillObj.AddComponent<SkillController>();
         skillController.notifySkillFinish -= OnSkillEnd;
         ActionEnd();
     }
@@ -69,19 +67,23 @@ public class CastSkillAction : Action
         if (skill != null) {
            return SkillHelper.Instance.GetSkillPrefab(skill);
         }
-        return SkillHelper.Instance.GetSkillPrefab(skillName);
+        return SkillHelper.Instance.GetSkillPrefab(skillTypeName);
     }
 
     private void GetOrInitSkillHolder() {
         if (skill != null) {
-            skillName = skill.skillName;
+            skillTypeName = skill.GetType().ToString();
         }
-        //skillObj = SkillHolderPool.Instance.DePool(skillName);
+
+        skillObj = SkillHolderPool.Instance.DePool(skillTypeName);
+
         if (skillObj == null) {
             GameObject skillPrefab = GetSkillPrefab();
             skillObj = GameObject.Instantiate(skillPrefab);
+            skillController = skillObj.AddComponent<SkillController>();
         } else {
             skillObj.SetActive(true);
+            skillController = skillObj.GetComponent<SkillController>();
         }
     }
 

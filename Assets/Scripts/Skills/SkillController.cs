@@ -168,7 +168,7 @@ public class SkillController : MonoBehaviour
         Debug.Log(skill.sequenceId + " end skill " + skill.name + " : " + Time.time);
 
         ResetToDefault();
-        SkillHolderPool.Instance.EnPool(gameObject, skill.skillName);
+        SkillHolderPool.Instance.EnPool(gameObject, skill.GetType().ToString());
     }
 
     public void ResetToDefault() {

@@ -15,6 +15,7 @@ public class SkillHolderPool : Singleton<SkillHolderPool>
     }
 
     public void EnPool(GameObject skillController, String skillName) {
+        Debug.Log("EnPool " + skillName);
         if (skillController.activeSelf) {
             skillController.SetActive(false);
         }
@@ -29,6 +30,7 @@ public class SkillHolderPool : Singleton<SkillHolderPool>
     }
 
     public GameObject DePool(String skillName) {
+        Debug.Log("DePool " + skillName);
         if (pool.ContainsKey(skillName)) {
             List<GameObject> objs = pool[skillName];
             if (objs.Count > 0) {
@@ -37,6 +39,8 @@ public class SkillHolderPool : Singleton<SkillHolderPool>
                 return obj;
             }
         }
+        Debug.Log("DePool " + skillName + " Failed ");
+
         return null;
     }
 }

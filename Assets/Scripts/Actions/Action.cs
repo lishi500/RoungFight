@@ -83,6 +83,17 @@ public abstract class Action
         types.Add(actionType);
     }
 
+    public void ActionCheck(int num) {
+        if (notifyActionEnd == null) {
+            Debug.Log("No one listen !!! " + num);
+            //GetInvocationList
+            //notifyActionEnd.GetInvocationList();
+        } else { 
+            Debug.Log("Some one listen : " + num);
+
+        }
+    }
+
     public void ActionEnd() {
         if (notifyActionEnd != null) {
             notifyActionEnd(this);

@@ -34,7 +34,7 @@ public class FireBallAttackBuff : BaseBuff
 
     public override void OnReactionTrigger(Action action) {
         CastSkillAction castSkillAction = new CastSkillAction(holder.gameObject, action.targets);
-        castSkillAction.skillName = attachedSkillName;
+        castSkillAction.skillTypeName = attachedSkillName;
         castSkillAction.PrepareAction();
         FireBallAttackSkill fireSkill = castSkillAction.skillObj.GetComponent<Skill>() as FireBallAttackSkill;
         fireSkill.flameEffect = flameBall;
