@@ -27,20 +27,24 @@ public abstract class BaseBuff : MonoBehaviour
     public bool isDeBuff;
     public bool isForever;
     public bool canDuplicate;
+    public bool canBeCleaned = true;
     public string attachedSkillName;
     public int prioirty = 10; // 10 is lowest, 1 is highest
+
 
     public BaseEffect OnApplyEffect;
     public BaseEffect OnTriggerEffect;
     public BaseEffect LivingEffect;
     public BaseEffect[] OtherEffects;
 
+    [HideInInspector]
+    public int seqId;
     // TODO make it private
     public float roundPasted;
     [HideInInspector]
-    public int tirggeredCount;
+    private int tirggeredCount;
     [HideInInspector]
-    public int reactCount;
+    private int reactCount;
     [HideInInspector]
     SimpleEventHelper eventHelper;
     [HideInInspector]
@@ -112,6 +116,12 @@ public abstract class BaseBuff : MonoBehaviour
     public virtual void OnDie(string state)
     {
     }
+    public virtual void OnBuffClean() {
+        if (canBeCleaned) {
+            DestroyBuff();
+        }
+    }
+
     // Possible benefit by other attribute
     public virtual float CalculatValue() {
         return value + caster.GetAttrVal(AttrType.Attack) * factor;
@@ -166,7 +176,8 @@ public abstract class BaseBuff : MonoBehaviour
             holder.party.notifyPartyRoundStart += OnRoundStart;
             holder.party.notifyPartyRoundEnd += OnRoundEnd;
         }
-
+        seqId = GameManager.Instance.RegisterBuff(this);
+        
         OnBuffApply();
         ShowEffect(OnApplyEffect);
         ShowEffect(LivingEffect);
@@ -182,10 +193,12 @@ public abstract class BaseBuff : MonoBehaviour
 
     public void DestroyBuff() {
         OnBuffRemove();
+        holder.status.RemoveStatusById(seqId);
 
         if (notifyBuffRemoved != null) {
             notifyBuffRemoved(gameObject);
         }
+        GameManager.Instance.UnRegisterBuff(seqId);
         holder.party.notifyPartyRoundStart -= OnRoundStart;
         holder.party.notifyPartyRoundEnd -= OnRoundEnd;
 

@@ -14,6 +14,8 @@ public abstract class Creature : MonoBehaviour {
     public CustomAnimationController animationController;
     public Shield shield;
 
+    [HideInInspector]
+    public CreatureStatus status;
     public Party party {
         get { return GetComponentInParent<Party>(); }
     }
@@ -114,6 +116,7 @@ public abstract class Creature : MonoBehaviour {
     }
 
     protected virtual void Awake() {
+        status = new CreatureStatus();
         animationController = GetComponentInChildren<CustomAnimationController>();
         shield = new Shield(this);
         buffs = new List<BaseBuff>();
