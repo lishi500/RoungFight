@@ -76,7 +76,6 @@ public abstract class Creature : MonoBehaviour {
             if (health.GetCalculatedValue() <= 0) {
                 OnDie();
             }
-            //Debug.Log("Health Left:" + health.GetCalculatedValue());
         }
     }
 

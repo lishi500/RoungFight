@@ -38,7 +38,8 @@ public class CastSkillAction : Action
         if (skillClone.skillData.IsMultiTarget) {
             skillClone.targetObjs = targets;
         } else {
-            skillClone.targetObj = targets[0];
+            skillClone.targetObjs = new List<GameObject>();
+            skillClone.targetObjs.Add(targets[0]);
         }
     }
 

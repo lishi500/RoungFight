@@ -16,8 +16,16 @@ public class ChargeEnergyAction : Action
     protected override void OnStartAction() {
         Cat cat = targets[0].GetComponent<Cat>();
         if (cat != null && actionAttr != null) {
+            float chargeAmount = actionAttr.GetCalculatedValue();
             //Debug.Log("Charge energy Action: " + cat.name + " : " + actionAttr.GetCalculatedValue());
-            cat.ChargeEnergy(actionAttr.GetCalculatedValue());
+            if (cat.status.CanAction) {
+                cat.ChargeEnergy(chargeAmount);
+            } else {
+                // If cat cannot action, cannot charge to full amount
+                float gap = (cat.Energy.maxValue - cat.Energy.value);
+                float minCharge = Mathf.Min(chargeAmount, gap - 1);
+                cat.ChargeEnergy(minCharge);
+            }
         }
         ActionEnd();
     }

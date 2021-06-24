@@ -60,9 +60,15 @@ MonoBehaviour:
     yOffSet: 0
     useRoleFacing: 0
     followRole: 0
-  triggeredBuffDefs: []
-  onApplyBuffDefs:
+  postCastBuffDefs:
   - buffObj: {fileID: 5268396840411786641, guid: 6ba1de3f25a01e74ab736d20d0e20ac3, type: 3}
+    targetType: 0
+    skill: {fileID: 0}
+  - buffObj: {fileID: 8723841873570637777, guid: 467a47a5d87ed504f8d665fbe697e48e, type: 3}
+    targetType: 10
+    skill: {fileID: 0}
+  preCastBuffDefs:
+  - buffObj: {fileID: 929672321773923350, guid: 3200d09cca593cb49bd50011d90ea0d6, type: 3}
     targetType: 0
     skill: {fileID: 0}
   isBuffAttacedSkill: 0

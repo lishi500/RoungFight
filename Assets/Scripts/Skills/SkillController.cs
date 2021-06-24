@@ -26,10 +26,12 @@ public class SkillController : MonoBehaviour
 
     public virtual void SkillOnTrail() { }
     public virtual void OnSkillCast() {
-        ApplyAttachedBuff();
+        ApplyAttachedBuff(skill.preCastBuffDefs);
     }
     public virtual void SkillUpdate() { }
-    public virtual void OnSkillStop() { }
+    public virtual void OnSkillStop() { 
+        ApplyAttachedBuff(skill.postCastBuffDefs);
+    }
 
     public virtual void InitialSkill() {
         pastTime = 0;
@@ -71,10 +73,12 @@ public class SkillController : MonoBehaviour
         }
     }
 
-    void ApplyAttachedBuff() { 
-        if (skill.onApplyBuffDefs != null && skill.onApplyBuffDefs.Count > 0) {
-            foreach (SkillAttachedBuff attachedBuff in skill.onApplyBuffDefs) {
+    void ApplyAttachedBuff(List<SkillAttachedBuff> attachedBuffs) { 
+        if (attachedBuffs != null && attachedBuffs.Count > 0) {
+            foreach (SkillAttachedBuff attachedBuff in attachedBuffs) {
                 attachedBuff.skill = skill;
+                //if (attachedBuff.targetType == TargetType.INHERITED)
+
                 ApplyBuffAction applyBuffAction = new ApplyBuffAction(creator);
                 applyBuffAction.SetSkillAttackedBuff(attachedBuff);
                 Creature creature = creator.GetComponent<Creature>();
@@ -162,10 +166,11 @@ public class SkillController : MonoBehaviour
 
 
     public void OnSkillFinish() {
+        OnSkillStop();
         if (notifySkillFinish != null) {
             notifySkillFinish();
         }
-        Debug.Log(skill.sequenceId + " end skill " + skill.name + " : " + Time.time);
+        //Debug.Log(skill.sequenceId + " end skill " + skill.name + " : " + Time.time);
 
         ResetToDefault();
         SkillHolderPool.Instance.EnPool(gameObject, skill.GetType().ToString());

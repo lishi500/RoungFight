@@ -60,7 +60,7 @@ public class ActionChain : MonoBehaviour
     }
 
     private void ListenActionEnd(Action action) {
-        Debug.Log("Listen action end " + action.GetType().ToString() + " current " + currentAction.action.GetType().ToString());
+        //Debug.Log("Listen action end " + action.GetType().ToString() + " current " + currentAction.action.GetType().ToString());
         if (action == currentAction.action) {
             currentAction.action.notifyActionEnd -= ListenActionEnd;
             if (!IsAllTaskCompleted()) {

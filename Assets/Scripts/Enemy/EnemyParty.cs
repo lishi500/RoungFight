@@ -24,14 +24,23 @@ public class EnemyParty : Party
 
     protected void BossAction() {
         actionChain.notifyActionChainEnd += OnBossActionEnd;
-        boss.BaseAction();
+
+        if (boss.status.CanAction) {
+            boss.BaseAction();
+        } else {
+            OnBossActionEnd();
+        }
     }
 
     protected void CreepsAction() {
         NextCreeps();
         if (m_current_creeps != null) {
             actionChain.notifyActionChainEnd += OnCreepActionEnd;
-            m_current_creeps.BaseAction();
+            if (m_current_creeps.status.CanAction) {
+                m_current_creeps.BaseAction();
+            } else {
+                OnCreepActionEnd();
+            }
         } else {
             ResetAllActionFlag();
             //Debug.Log("Enermy Round end");

@@ -32,6 +32,10 @@ public class Cat : Creature
     }
 
     protected virtual void OnEnergyChange(Attribute attr) {
+        if (!status.CanAction) {
+            return;
+        }
+
         if (Energy.value == Energy.maxValue) {
             CastCatPrimarySkill();
         }

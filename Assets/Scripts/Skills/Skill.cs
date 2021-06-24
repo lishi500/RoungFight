@@ -28,7 +28,9 @@ public abstract class Skill : MonoBehaviour {
    
     public bool hasTargetController;
     [HideInInspector]
-    public GameObject targetObj;
+    public GameObject targetObj { 
+        get { return targetObjs != null && targetObjs.Count > 0 ? targetObjs[0] : null; }
+    }
     [HideInInspector]
     public List<GameObject> targetObjs;
     protected Creature target {
@@ -70,8 +72,8 @@ public abstract class Skill : MonoBehaviour {
     public bool hasEffectController;
     public List<EffectChain> effectChains;
     //public List<EffectCollider> colliderChains;
-    public List<SkillAttachedBuff> triggeredBuffDefs;
-    public List<SkillAttachedBuff> onApplyBuffDefs;
+    public List<SkillAttachedBuff> postCastBuffDefs;
+    public List<SkillAttachedBuff> preCastBuffDefs;
     public bool isBuffAttacedSkill;
 
     public BaseEffect OnCastEffect; // position caster

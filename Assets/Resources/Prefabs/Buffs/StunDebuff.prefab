@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8723841873570637777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5647596880162605171}
+  - component: {fileID: 5129547113396276599}
+  m_Layer: 0
+  m_Name: StunDebuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5647596880162605171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8723841873570637777}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.0904653, y: 3.388087, z: -2.358671}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5129547113396276599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8723841873570637777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3871d41c8d52f8c43a6446b22837d74d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffName: StunDebuff
+  duration: 2
+  type: 6
+  reactTypes: 
+  targetType: 0
+  caster: {fileID: 0}
+  holder: {fileID: 0}
+  value: 0
+  factor: 0
+  damageType: 0
+  maxTriggerTimes: 0
+  maxReactTimes: 0
+  isDeBuff: 1
+  isForever: 0
+  canDuplicate: 1
+  canBeCleaned: 1
+  attachedSkillName: 
+  prioirty: 10
+  OnApplyEffect:
+    effect: {fileID: 109542, guid: 2ed06ab528b7c474eb9246421cd7c791, type: 3}
+    duration: 1
+    delay: 0.1
+  OnTriggerEffect:
+    effect: {fileID: 0}
+    duration: 1
+    delay: 0.1
+  LivingEffect:
+    effect: {fileID: 0}
+    duration: 1
+    delay: 0.1
+  OtherEffects: []
+  seqId: 0
+  roundPasted: 0
