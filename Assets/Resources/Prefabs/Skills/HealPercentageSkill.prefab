@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &552696375900447877
+--- !u!1 &8336358120518038237
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,66 +8,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 552696375900447876}
-  - component: {fileID: 552696375900447899}
+  - component: {fileID: 8336358120518038239}
+  - component: {fileID: 8336358120518038236}
   m_Layer: 0
-  m_Name: CriticalSlashSkill
+  m_Name: HealPercentageSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &552696375900447876
+--- !u!4 &8336358120518038239
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 552696375900447877}
+  m_GameObject: {fileID: 8336358120518038237}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.69859886, y: 0.33668935, z: -0.2363628}
+  m_LocalPosition: {x: 3.0904653, y: 3.388087, z: -2.358671}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &552696375900447899
+--- !u!114 &8336358120518038236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 552696375900447877}
+  m_GameObject: {fileID: 8336358120518038237}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d2faa94f7fc1eb419b0a0dcd835c0bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 089bf1d9124601347a43c5b10028e143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sequenceId: 0
-  skillData: {fileID: 11400000, guid: a5ff1c1e217a81842a7964e8bf91dcd9, type: 2}
-  initCD: 0
+  skillData: {fileID: 11400000, guid: c1237fcfa72a72749842c9aede5ce418, type: 2}
+  initCD: 2
   hasTargetController: 0
   targetObjs: []
   CDLeft: 0
   ownerObj: {fileID: 0}
   hasEffectController: 0
   effectChains:
-  - effect: {fileID: 7950670944024054525, guid: 518f83cfc2d204b43aeebd0dfd6893fb, type: 3}
+  - effect: {fileID: 7029217748785435596, guid: a5f729006c3583c4580330341d6a387e, type: 3}
     duration: 1
     delay: 0
-    positionType: 4
+    positionType: 0
     xOffSet: 0
     yOffSet: 0
     useRoleFacing: 0
     followRole: 0
-  postCastBuffDefs:
-  - buffObj: {fileID: 5268396840411786641, guid: 6ba1de3f25a01e74ab736d20d0e20ac3, type: 3}
-    targetType: 0
-    skill: {fileID: 0}
-  preCastBuffDefs:
-  - buffObj: {fileID: 929672321773923350, guid: 3200d09cca593cb49bd50011d90ea0d6, type: 3}
-    targetType: 0
-    skill: {fileID: 0}
+  postCastBuffDefs: []
+  preCastBuffDefs: []
   isBuffAttacedSkill: 0
   OnCastEffect:
     effect: {fileID: 0}

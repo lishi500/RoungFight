@@ -9,6 +9,7 @@ public abstract class Skill : MonoBehaviour {
     [HideInInspector]
     public int sequenceId;
     public SkillData skillData;
+    public int initCD;
     
     public string skillName {
         get { return skillData.Name; }
@@ -196,7 +197,16 @@ public abstract class Skill : MonoBehaviour {
     }
 
     protected virtual void Start() {
-        CDLeft = 0;
+
+        CDLeft = initCD;
+        if (CDLeft > 0) {
+            isReady = false;
+        }
+        // TODO refactor SKILL,
+        Debug.Log(skillName + " InitCd " + initCD + " IsReady " + IsReady);
+        if (owner != null) {
+            owner.party.notifyPartyRoundEnd += UpdateCD;
+        }
         //GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
     }
     protected virtual void Update() {

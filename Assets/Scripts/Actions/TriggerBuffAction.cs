@@ -11,6 +11,8 @@ public class TriggerBuffAction : Action
     }
 
     protected override void OnPrepareAction() {
+        //if (baseBuff != null) {
+        //}
     }
 
     protected override void OnStartAction() {

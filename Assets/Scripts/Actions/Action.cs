@@ -20,6 +20,7 @@ public abstract class Action
 
     public List<ActionType> types;
     private bool isPrepared;
+    protected bool canStartAction = true;
 
     public delegate void ActionReadyEvent(Action action);
     public event ActionReadyEvent notifyActionReady;
@@ -40,8 +41,12 @@ public abstract class Action
         if (!isPrepared) {
             PrepareAction();
         }
-
-        OnStartAction();
+        if (canStartAction) {
+            OnStartAction();
+        } else {
+            ActionEnd();
+            Debug.LogError(this.GetType() + " action start failed");
+        }
     }
 
     public abstract List<ActionType> DefaultActionType();

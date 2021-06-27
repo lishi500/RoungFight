@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseBuff : MonoBehaviour
-{
+public abstract class BaseBuff : MonoBehaviour {
     public string buffName;
     public int duration; // round
     //public float frequency; // gap
@@ -52,11 +51,13 @@ public abstract class BaseBuff : MonoBehaviour
     [HideInInspector]
     public event OnBuffRemoveDelegate notifyBuffRemoved;
 
+    private bool isTriggerInProgress;
+    private bool isReadyToBeDestroyed;
     public abstract BuffEvaluatorResult OnBuffEvaluated(BuffEvaluatorResult evaluatorResult);
     public abstract void OnBuffTrigger();
     public abstract void OnBuffApply();
     public abstract void OnBuffRemove();
-    public abstract bool CanApplyTo(Creature creature); 
+    public abstract bool CanApplyTo(Creature creature);
     public abstract void OnReactionTrigger(Action action);
     //public virtual List<Creature> SelectTargets() {
     //    return new List<Creature>();
@@ -81,6 +82,7 @@ public abstract class BaseBuff : MonoBehaviour
             TriggerBuffAction triggerBuffAction = new TriggerBuffAction();
             triggerBuffAction.baseBuff = this;
             holder.party.actionChain.AddAction(triggerBuffAction, 0.4f);
+            isTriggerInProgress = true;
         }
         roundPasted += 1;
     }
@@ -89,36 +91,37 @@ public abstract class BaseBuff : MonoBehaviour
             DestroyBuff();
         }
     }
-    
+
     public virtual void OnAttack(string state) {
         Debug.Log("OnAttack BaseBuff");
     }
-    public virtual void OnCastSkill(string state)
-    {
+    public virtual void OnCastSkill(string state) {
     }
 
-    public virtual void OnSkillReady(Skill skill)
-    {
+    public virtual void OnSkillReady(Skill skill) {
 
     }
-    public virtual void OnGetHit(DamageDef damageDef)
-    {
+    public virtual void OnGetHit(DamageDef damageDef) {
 
     }
-    public virtual void OnEnemyEnterOuterZone(string state)
-    {
+    public virtual void OnEnemyEnterOuterZone(string state) {
 
     }
-    public virtual void OnEnemyCollision(string state)
-    {
+    public virtual void OnEnemyCollision(string state) {
 
     }
-    public virtual void OnDie(string state)
-    {
+    public virtual void OnDie(string state) {
     }
     public virtual void OnBuffClean() {
         if (canBeCleaned) {
             DestroyBuff();
+        }
+    }
+
+    protected void TriggerEnd() {
+        isTriggerInProgress = false;
+        if (isReadyToBeDestroyed) {
+            Destroy(gameObject);
         }
     }
 
@@ -202,6 +205,10 @@ public abstract class BaseBuff : MonoBehaviour
         holder.party.notifyPartyRoundStart -= OnRoundStart;
         holder.party.notifyPartyRoundEnd -= OnRoundEnd;
 
-        Destroy(gameObject);
+        if (isTriggerInProgress) {
+            isReadyToBeDestroyed = true;
+        } else { 
+            Destroy(gameObject, 1);
+        }
     }
 }

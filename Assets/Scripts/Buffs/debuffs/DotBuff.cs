@@ -35,5 +35,6 @@ public class DotBuff : BaseBuff
         yield return new WaitForSeconds(0.2f);
         DamageDef damageDef = DamageHelper.Instance.CalculateDamage(damageSnapshot, caster, holder, damageType);
         holder.ReduceHealth(damageDef);
+        TriggerEnd();
     }
 }

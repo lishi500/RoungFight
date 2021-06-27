@@ -46,7 +46,7 @@ public class ApplyBuffAction : Action
             if (skillAttachedBuff != null) {
                 List<GameObject> tars = new List<GameObject>();
                 if (skillAttachedBuff.targetType == TargetType.INHERITED) {
-                    Debug.Log("INHERITED Target " + skillAttachedBuff.skill.targetObjs.Count);
+                    //Debug.Log("INHERITED Target " + skillAttachedBuff.skill.targetObjs.Count);
                     tars = skillAttachedBuff.skill.targetObjs;
                 } else {
                     tars = TargetHelper.Instance.SearchTargets(from.gameObject, skillAttachedBuff.targetType);

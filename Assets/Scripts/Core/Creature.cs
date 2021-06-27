@@ -9,6 +9,7 @@ public abstract class Creature : MonoBehaviour {
     public bool isAlive = true;
     public Skill primarySkill;
     public Skill secondarySkill;
+    public List<Skill> skillList;
     public List<BaseBuff> buffs;
     public Creature target;
     public CustomAnimationController animationController;
@@ -120,6 +121,12 @@ public abstract class Creature : MonoBehaviour {
         shield = new Shield(this);
         buffs = new List<BaseBuff>();
         buffs.AddRange(GetComponentsInChildren<BaseBuff>());
+        if (primarySkill != null) {
+            primarySkill.ownerObj = gameObject;
+        }
+        if (secondarySkill != null) {
+            secondarySkill.ownerObj = gameObject;
+        }
     }
 
 }

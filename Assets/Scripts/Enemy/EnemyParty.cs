@@ -26,7 +26,7 @@ public class EnemyParty : Party
         actionChain.notifyActionChainEnd += OnBossActionEnd;
 
         if (boss.status.CanAction) {
-            boss.BaseAction();
+            boss.StartRoundAction();
         } else {
             OnBossActionEnd();
         }

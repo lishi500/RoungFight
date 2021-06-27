@@ -535,7 +535,7 @@ MonoBehaviour:
     weightModifier: 1
     isInverseCalc: 0
   isAlive: 1
-  primarySkill: {fileID: 0}
+  primarySkill: {fileID: 8336358120518038236, guid: 17fc442bf8a76ca47bb7b677e37f1eb2, type: 3}
   secondarySkill: {fileID: 0}
   buffs: []
   target: {fileID: 0}

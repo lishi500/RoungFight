@@ -74,6 +74,13 @@ public class CastSkillAction : Action
     private void GetOrInitSkillHolder() {
         if (skill != null) {
             skillTypeName = skill.GetType().ToString();
+
+            if (!skill.IsReady) {
+                ActionEnd();
+                return;
+            } else {
+                skill.StartCD();
+            }
         }
 
         skillObj = SkillHolderPool.Instance.DePool(skillTypeName);
