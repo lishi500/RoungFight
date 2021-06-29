@@ -25,6 +25,7 @@ public class FireBallAttackSkill : Skill
     }
 
     public override void UpdateEffect() {
+        // TODO refactor SkillPool, get issue to clean update Skill.
         if (!isStarted) {
             isStarted = true;
             StartFlameEffect();
@@ -39,6 +40,7 @@ public class FireBallAttackSkill : Skill
     }
 
     private void StartFlameEffect() {
+        Debug.Log("StartFlameEffect " + sequenceId);
         if (flameEffect == null) {
             flameEffect = Instantiate(flameEffectPrefab);
             flameEffect.transform.position = owner.transform.position;

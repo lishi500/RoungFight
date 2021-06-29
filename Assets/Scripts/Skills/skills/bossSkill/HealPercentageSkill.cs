@@ -22,7 +22,7 @@ public class HealPercentageSkill : Skill
         yield return new WaitForSeconds(0.3f);
 
         float healPercentage = CalculateValue(0);
-        float healAmount = healPercentage * target.health.maxValue;
+        float healAmount = healPercentage / 100f * target.health.maxValue;
         DamageDef healDef = DamageHelper.Instance.CalculateDamage(healAmount, owner.GetAttrVal(AttrType.Critical), DamageType.HEAL);
 
         target.Heal(healDef);

@@ -10,6 +10,7 @@ public class DelayStartHandler : Singleton<DelayStartHandler>
 
     private IEnumerator DelayStart(Action action, float delay) {
         yield return new WaitForSeconds(delay);
+        Debug.Log("DelayStart ");
         action.StartAction();
     }
 

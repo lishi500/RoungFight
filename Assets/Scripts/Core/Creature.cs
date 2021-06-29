@@ -115,18 +115,40 @@ public abstract class Creature : MonoBehaviour {
         animationController.eventHelper.notifyAnimationEnd -= OnHitAnimationEnd;
     }
 
-    protected virtual void Awake() {
-        status = new CreatureStatus();
-        animationController = GetComponentInChildren<CustomAnimationController>();
-        shield = new Shield(this);
-        buffs = new List<BaseBuff>();
-        buffs.AddRange(GetComponentsInChildren<BaseBuff>());
+    private void LoadSkill() {
+        Transform primarySkillObj = transform.Find("PrimarySkill");
+        Transform secondarySkillObj = transform.Find("SecondarySkill");
+        Transform skillListObj = transform.Find("SkillList");
+
+        if (primarySkillObj != null) {
+            primarySkill = primarySkillObj.GetComponentInChildren<Skill>();
+        }
+        if (secondarySkillObj != null) {
+            secondarySkill = secondarySkillObj.GetComponentInChildren<Skill>();
+        }
+        if (skillListObj != null) {
+            skillList = skillListObj.GetComponentsInChildren<Skill>().ToList();
+        }
+
         if (primarySkill != null) {
             primarySkill.ownerObj = gameObject;
         }
         if (secondarySkill != null) {
             secondarySkill.ownerObj = gameObject;
         }
+        if (skillList != null) {
+            skillList.ForEach(skill => skill.ownerObj = gameObject);
+        }
+    }
+
+    protected virtual void Awake() {
+        status = new CreatureStatus();
+        animationController = GetComponentInChildren<CustomAnimationController>();
+        shield = new Shield(this);
+        buffs = new List<BaseBuff>();
+        buffs.AddRange(GetComponentsInChildren<BaseBuff>());
+
+        LoadSkill();
     }
 
 }

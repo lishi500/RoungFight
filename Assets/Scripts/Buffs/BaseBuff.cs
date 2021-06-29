@@ -40,10 +40,8 @@ public abstract class BaseBuff : MonoBehaviour {
     public int seqId;
     // TODO make it private
     public float roundPasted;
-    [HideInInspector]
-    private int tirggeredCount;
-    [HideInInspector]
-    private int reactCount;
+    protected int tirggeredCount;
+    public int reactCount;
     [HideInInspector]
     SimpleEventHelper eventHelper;
     [HideInInspector]
@@ -180,7 +178,7 @@ public abstract class BaseBuff : MonoBehaviour {
             holder.party.notifyPartyRoundEnd += OnRoundEnd;
         }
         seqId = GameManager.Instance.RegisterBuff(this);
-        
+        gameObject.name = gameObject.name + " " + seqId;
         OnBuffApply();
         ShowEffect(OnApplyEffect);
         ShowEffect(LivingEffect);

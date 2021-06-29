@@ -61,6 +61,7 @@ public class MoveTo : MonoBehaviour
     }
 
     private IEnumerator Move() {
+        Debug.Log("Start move");
         Vector3 startPos = transform.position;
 
         float elapsedTime = 0f;
@@ -104,6 +105,7 @@ public class MoveTo : MonoBehaviour
     }
 
     public void OnDestinationArrived() {
+        Debug.Log("arrived");
         if (notifyDestinationArrived != null) {
             notifyDestinationArrived();
         }

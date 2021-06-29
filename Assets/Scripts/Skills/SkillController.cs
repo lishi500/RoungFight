@@ -37,7 +37,7 @@ public class SkillController : MonoBehaviour
         pastTime = 0;
         effectChainIndex = 0;
         skill.SkillSetup();
-        Debug.Log(skill.sequenceId + " start skill " + skill.name + " : " + Time.time);
+        //Debug.Log(skill.sequenceId + " start skill " + skill.name + " : " + Time.time);
         ReactionController.Instance.EvaluateBuffs(creator.GetComponent<Creature>(), ActionType.CastSkill, action);
 
         skill.StartCastSkill();
